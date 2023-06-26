@@ -1,19 +1,38 @@
 ```plantuml
-@startuml
+!include <tupadr3/common>
+!include <tupadr3/devicons/mysql>!define Database(iconUrl) <img:iconUrl>
 
-rectangle "Funzo" {
+skinparam componentStyle uml2
+skinparam backgroundColor #FAFAFA
+
+rectangle "Funzo" #FFC300 {
+  component "Proxy" as proxy {
+    
+  }
+  
+  DEV_MYSQL(db,Mysql,database,red) 
   component "Mobile App" as app {
-   [Firebase Authenication]
+   [Authentication] as auth
    [Subject Selection] as subject
    [Reports]
    [Quiz] as quiz
    subject -down-> quiz
   }
-  database "MySql"  as db
-
+  note bottom of proxy: Data Access
+  note bottom of app: User Interaction and Content
 }
-app -> db
-db -> app
-@enduml
 
+component "Firebase" as firebase {
+}
+
+auth -up-> firebase
+app <-> proxy: Sends requests
+proxy <-right-> db: Manages
+
+note left of firebase: User Authentication
+
+proxy ..> firebase : Controls
+firebase ..> auth : Handles authentication
+
+@enduml
 ```
