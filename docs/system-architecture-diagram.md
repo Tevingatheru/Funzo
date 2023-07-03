@@ -10,6 +10,12 @@ rectangle "Funzo" #FFC300 {
     
   }
   
+  component "Web application" as web {
+    [Exam module] as exam      
+    [Authentication] as webAuth
+    [Subject module] as subject     
+  }
+  
   DEV_MYSQL(db,Mysql,database,red) 
   component "Mobile App" as app {
    [Authentication] as auth
@@ -18,18 +24,18 @@ rectangle "Funzo" #FFC300 {
    [Quiz] as quiz
    subject -down-> quiz
   }
-  note bottom of proxy: Data Access
-  note bottom of app: User Interaction and Content
+  note left of proxy: Data Access
 }
 
 component "Firebase" as firebase {
 }
 
 auth -up-> firebase
-app <-> proxy: Sends requests
+app <-left-> proxy: Sends requests
+web <-up-> proxy
 proxy <-right-> db: Manages
 
-note left of firebase: User Authentication
+note right of firebase: User Authentication
 
 proxy ..> firebase : Controls
 firebase ..> auth : Handles authentication
