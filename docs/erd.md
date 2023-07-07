@@ -19,7 +19,7 @@ entity questions {
   image: varchar
 }
 
-entity "multipl_choice_answers" as answers{
+entity "multiple_choice_answers" as m_answers {
   id: int <<PK>>
   question_code: varchar <<FK>>
   --
@@ -30,6 +30,12 @@ entity "multipl_choice_answers" as answers{
   correct_option: varchar
 } 
 
+entity "true_or_false_answers" as b_answers {
+  id: int <<PK>>
+  question_code: varchar <<FK>>
+  --
+  correct_option: varchar
+}
 
 entity exams {
   id: int <<PK>>
@@ -37,7 +43,6 @@ entity exams {
   --
   code: varchar <<Unique>>
 }
-
 
 entity results {
   id: int <<PK>>
@@ -49,18 +54,19 @@ entity results {
   attempts: int
 }
 
-entity student {
-  id: int <<PK>>
-  code: varchar
-  --
-  name: varchar
+entity user {
+    id: int <<PK>>
+    --
+    code: varchar <<Unique>>
+    type: varchar
+    email: varchar
 }
 
- 
-exams ||-up-|{ subjects
+exams }|-up-|| subjects
 exams ||-right-|{ questions
-questions ||-|| answers
-results }o-up-|| student
+questions ||--|| m_answers
+questions ||--|| b_answers
+results }o-up-|| user
 results }o-|| exams
 
 @enduml
