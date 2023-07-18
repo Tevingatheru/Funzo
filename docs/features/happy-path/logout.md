@@ -1,7 +1,7 @@
 
 ```plantuml
 @startuml
-title Login Sequence Diagram
+title Logout Sequence Diagram
 
 actor User
 participant MobileApp

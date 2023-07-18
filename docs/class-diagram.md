@@ -12,12 +12,12 @@ class "AppCompatActivity" as compact {
 }
 
 class "QuizActivity" as quiz {
-  - currentPosition
-  - questionList
-  - exam
-  - selectedOption
-  - correctOption
-  - score
+  - currentPosition : Int
+  - questionList : List
+  - exam : Exam
+  - selectedOption : String
+  - correctOption : String
+  - score : Int
   --
   - setQuestion()
   - multipleOptionsView()
@@ -27,9 +27,9 @@ class "QuizActivity" as quiz {
 }
 
 class "Question" as question {
-  - question
-  - type
-  - examCode
+  - question : String
+  - type : String
+  - examCode : String
   --
   + setQuestion
   + getQuestion
@@ -40,11 +40,11 @@ class "Question" as question {
 }
 
 class "MultipleOptionsQuestion" as mOptions {
-  - optionA
-  - optionB
-  - optionC
-  - optionD
-  - correctOption
+  - optionA : String
+  - optionB : String
+  - optionC : String
+  - optionD : String
+  - correctOption : String
   --
   + setOptionA
   + getOptionA
@@ -66,9 +66,10 @@ class "FirebaseUtil" as firebase {
   - isUserLoggedIn()
 }
 
-class "Subect" as subject {
-  - name
-  - category
+class "Subject" as subject {
+  - name : String
+  - category : String
+  - exams : List
   --
   + setName
   + getName
@@ -77,21 +78,19 @@ class "Subect" as subject {
 }
 
 class "Examination" as exam {
-  - examCode
-  - name
-  - level
+  - examCode : String
+  - name : String
+  - questions : List
   --
   + setExamCode
   + getExamCode
   + setName
   + getName
-  + setLevel
-  + getLevel
 }
 
 class "LoginOrSignupActivity" as authentication {
-  - emailTextView
-  - passwordTextView
+  - emailTextView : View
+  - passwordTextView : View
   --
   - signupUser()
   - loginUser()
@@ -99,14 +98,14 @@ class "LoginOrSignupActivity" as authentication {
 }
 
 class "SubjectActivity" as subjectActivity {
-  - subjectList
+  - subjectList : List
   --
   - subjectListDisplay()
   - selectSubject()
 }
 
 class "User" as user {
-  - userCode
+  - userCode : String
   --
   + setUserCode
   + getUserCode

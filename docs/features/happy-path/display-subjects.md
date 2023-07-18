@@ -1,7 +1,7 @@
 
 ```plantuml
 @startuml
-title Login Sequence Diagram
+title Display Subject List Feature Sequence Diagram
 
 actor User
 participant MobileApp
