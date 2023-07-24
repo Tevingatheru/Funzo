@@ -1,4 +1,4 @@
-package com.learner.funzo
+package com.learner.funzo.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

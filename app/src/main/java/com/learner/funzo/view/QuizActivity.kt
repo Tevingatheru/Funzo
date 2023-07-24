@@ -1,4 +1,4 @@
-package com.learner.funzo
+package com.learner.funzo.view
 
 import android.content.Intent
 import android.graphics.Color
@@ -12,6 +12,11 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.learner.funzo.model.Options
+import com.learner.funzo.model.Question
+import com.learner.funzo.R
+import com.learner.funzo.model.ScoreConstants
+import com.learner.funzo.model.Exam
 
 class QuizActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -25,10 +30,6 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
-
-//        questionList = intent.getParcelableArrayListExtra("questions")
-
-//        Log.i("question size: ", "${questions.size}" )
 
         exam = intent.getParcelableExtra("exam")
         questionList = exam!!.questions
@@ -45,7 +46,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         optionD.setOnClickListener ( this )
         submitButton.setOnClickListener ( this )
 
-        score.resetScore(questionList!!.size, exam!!.threshold)
+        ScoreConstants.resetScore(questionList!!.size, exam!!.threshold)
     }
 
     private fun setQuestion() {
@@ -89,7 +90,8 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
             option.typeface = Typeface.DEFAULT
             option.background = ContextCompat.getDrawable(
                 this,
-                R.drawable.default_text_background)
+                R.drawable.default_text_background
+            )
 
         }
 
@@ -99,16 +101,24 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         // TODO: display correct answer
         when(selectedOption) {
             "A" -> {
-                findViewById<TextView>(R.id.tvOptionA).background = ContextCompat.getDrawable(this, R.drawable.wrong_option_text_background)
+                findViewById<TextView>(R.id.tvOptionA).background = ContextCompat.getDrawable(this,
+                    R.drawable.wrong_option_text_background
+                )
             }
             "B" -> {
-                findViewById<TextView>(R.id.tvOptionB).background = ContextCompat.getDrawable(this, R.drawable.wrong_option_text_background)
+                findViewById<TextView>(R.id.tvOptionB).background = ContextCompat.getDrawable(this,
+                    R.drawable.wrong_option_text_background
+                )
             }
             "C" -> {
-                findViewById<TextView>(R.id.tvOptionC).background = ContextCompat.getDrawable(this, R.drawable.wrong_option_text_background)
+                findViewById<TextView>(R.id.tvOptionC).background = ContextCompat.getDrawable(this,
+                    R.drawable.wrong_option_text_background
+                )
             }
             "D" -> {
-                findViewById<TextView>(R.id.tvOptionD).background = ContextCompat.getDrawable(this, R.drawable.wrong_option_text_background)
+                findViewById<TextView>(R.id.tvOptionD).background = ContextCompat.getDrawable(this,
+                    R.drawable.wrong_option_text_background
+                )
             }
         }
     }
@@ -159,7 +169,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
                         if (question!!.correctOption != selectedOption?.let { Options.valueOf(it) }) {
                             correctAnswerView(selectedOption)
                         } else {
-                            score.addToCorrectResults()
+                            ScoreConstants.addToCorrectResults()
                         }
 
                         correctOption?.let { showCorrectOption(it) }
@@ -218,7 +228,8 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         tv.typeface = Typeface.DEFAULT_BOLD
         tv.setTextColor(Color.parseColor("#000000"))
         tv.background = ContextCompat.getDrawable(this,
-            R.drawable.selected_option_text_background)
+            R.drawable.selected_option_text_background
+        )
 
     }
 }

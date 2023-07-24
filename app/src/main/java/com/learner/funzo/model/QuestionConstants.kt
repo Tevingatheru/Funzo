@@ -1,4 +1,4 @@
-package com.learner.funzo
+package com.learner.funzo.model
 
 object QuestionConstants {
     const val TOTAL_QUESTIONS: String = "total_questions"
@@ -10,7 +10,8 @@ object QuestionConstants {
 
     private fun getQuestions(): ArrayList<Question> {
         val questionsList = ArrayList<Question>()
-        questionsList.add(Question(1, "Can you see this?","","No","Maybe","Next page","Yes",Options.D))
+        questionsList.add(Question(1, "Can you see this?","","No","Maybe","Next page","Yes",
+            Options.D))
         return questionsList
     }
 }

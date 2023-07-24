@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Funzo">
         <activity
-            android:name=".ResultActivity"
+            android:name=".view.ResultActivity"
             android:exported="true" >
 
 <!--            <intent-filter>-->
@@ -19,11 +19,11 @@
 <!--            </intent-filter>-->
         </activity>
         <activity
-            android:name=".QuizActivity"
+            android:name=".view.QuizActivity"
             android:exported="false">
         </activity>
         <activity
-            android:name=".MenuActivity"
+            android:name=".view.MenuActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
 
 <!--             <intent-filter>-->

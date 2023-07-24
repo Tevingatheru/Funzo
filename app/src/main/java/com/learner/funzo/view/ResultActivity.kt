@@ -1,4 +1,4 @@
-package com.learner.funzo
+package com.learner.funzo.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +8,8 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Button
 import android.widget.TextView
+import com.learner.funzo.R
+import com.learner.funzo.model.ScoreConstants
 
 class ResultActivity : AppCompatActivity() , OnClickListener {
 
@@ -25,9 +27,12 @@ class ResultActivity : AppCompatActivity() , OnClickListener {
         val nextButton = findViewById<Button>(R.id.playButton)
         nextButton.setOnClickListener(this)
         val scoreText = findViewById<TextView>(R.id.score)
-        scoreText.text = String.format("%d / %d", score!!.getScore(), score!!.getTotalNumberOfQuestions())
+        scoreText.text = String.format("%d / %d",
+            ScoreConstants.getScore(),
+            ScoreConstants.getTotalNumberOfQuestions()
+        )
         val completionText = findViewById<TextView>(R.id.completionMessage)
-        if (score!!.passed()) {
+        if (ScoreConstants.passed()) {
             completionText.text = "You Passed"
         }
         else {
@@ -44,6 +49,4 @@ class ResultActivity : AppCompatActivity() , OnClickListener {
             }
         }
     }
-
-
 }
