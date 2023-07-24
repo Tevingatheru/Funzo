@@ -3,13 +3,15 @@ package com.learner.funzo
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
 
-class MenuActivity : AppCompatActivity() {
+class SubjectListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu)
+        setContentView(R.layout.activity_subject_list)
         val listView = findViewById<ListView>(R.id.listView)
 
         val listContent = SubjectConstants.getSubjects()
@@ -29,6 +31,21 @@ class MenuActivity : AppCompatActivity() {
             intent.putExtra(QuestionConstants.CORRECT_ANSWERS, "0")
             startActivity(intent)
             finish()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.example_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.item1 -> {
+                FirebaseUtil.logout(this)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

@@ -1,57 +1,73 @@
 ```plantuml
 @startuml
 entity subjects {
-  id: Int <<PK>>
+  id: int <<PK>>
   --
-  code: varChar <<Unique>>
-  name: varChar 
-  description: varChar 
-  category: varChar 
+  code: varchar <<Unique>>
+  name: varchar 
+  description: varchar 
+  category: varchar 
 }
 
 entity questions {
-  id: Int <<PK>>
-  examCode: varChar <<FK>>
+  id: int <<PK>>
+  exam_code: varchar <<FK>>
   --
-  code: varChar <<Unique>>
-  question: varChar
-  image: varChar
-  optionA: varChar
-  optionB: varChar
-  optionC: varChar
-  optionD: varChar
-  correctOption: varChar
+  code: varchar <<Unique>>
+  question: varchar
+  type: varchar
+  image: varchar
+}
+
+entity "multiple_choice_answers" as m_answers {
+  id: int <<PK>>
+  question_code: varchar <<FK>>
+  --
+  option_a: varchar
+  option_b: varchar
+  option_c: varchar
+  option_d: varchar
+  correct_option: varchar
+} 
+
+entity "true_or_false_answers" as b_answers {
+  id: int <<PK>>
+  question_code: varchar <<FK>>
+  --
+  correct_option: varchar
 }
 
 entity exams {
-  id: Int <<PK>>
-  subjectCode: varChar <<FK>>
+  id: int <<PK>>
+  subject_code: varchar <<FK>>
   --
-  code: varChar <<Unique>>
+  code: varchar <<Unique>>
 }
-
 
 entity results {
-  id: Int <<PK>>
-  examCode: varChar <<FK>>
-  studentCode: varChar <<FK>>
+  id: int <<PK>>
+  exam_code: varchar <<FK>>
+  student_code: varchar <<FK>>
   --
-  code: String <<Unique>>
+  code: varchar <<Unique>>
+  score: varchar
+  attempts: int
 }
 
-entity student {
-  id: Int <<PK>>
-  code: varChar
-  --
-  name: varChar
+entity user {
+    id: int <<PK>>
+    --
+    code: varchar <<Unique>>
+    type: varchar
+    email: varchar
 }
 
- 
-exams - questions
-questions - subjects
+exams }|-up-|| subjects
+exams ||-right-|{ questions
+questions ||--|| m_answers
+questions ||--|| b_answers
+results }o-up-|| user
+results }o-|| exams
 
-
-results .up. student
-results . exams
 @enduml
 ```
