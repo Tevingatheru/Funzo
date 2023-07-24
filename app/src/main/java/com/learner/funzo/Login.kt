@@ -22,11 +22,11 @@ class Login : AppCompatActivity() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = mAuth!!.currentUser
-//        if (currentUser != null) {
-//            val intent = Intent(applicationContext, MainActivity::class.java)
-//            startActivity(intent)
-//            finish()
-//        }
+        if (currentUser != null) {
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

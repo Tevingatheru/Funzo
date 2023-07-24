@@ -7,11 +7,10 @@ import android.view.MenuInflater
 import android.widget.Button
 import android.view.Menu
 import android.view.MenuItem
-
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var auth: FirebaseAuth
+    lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,13 +34,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun logout() {
+    fun logout() {
         auth.signOut()
-        // Implement any additional logout logic if required, such as clearing local session data.
-        // After signing out, you may want to navigate the user to the login screen.
-       // val intent = Intent(this, callingActivity::class.java)
-       // startActivity(intent)
-        // For simplicity, let's just finish the current activity.
+
+        // startActivity(intent)
+       val intent = Intent(this, Login::class.java)
+
+
 
         finish()
     }
