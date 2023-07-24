@@ -4,8 +4,6 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
-    <string name="click_to_login">Click to login</string>
-    <string name="click_to_register">click_to_register</string>
     <string name="dashboard">Dashboard</string>
     <string name="matt_tevin">Matt Tevin</string>
     <string name="logout">Logout</string>
