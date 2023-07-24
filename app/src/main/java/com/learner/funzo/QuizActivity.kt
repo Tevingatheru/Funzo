@@ -6,6 +6,8 @@ import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
@@ -26,10 +28,6 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
 
-//        questionList = intent.getParcelableArrayListExtra("questions")
-
-//        Log.i("question size: ", "${questions.size}" )
-
         exam = intent.getParcelableExtra("exam")
         questionList = exam!!.questions
         setQuestion()
@@ -46,71 +44,6 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         submitButton.setOnClickListener ( this )
 
         score.resetScore(questionList!!.size, exam!!.threshold)
-    }
-
-    private fun setQuestion() {
-        val optionA = findViewById<TextView>(R.id.tvOptionA)
-        val optionB = findViewById<TextView>(R.id.tvOptionB)
-        val optionC = findViewById<TextView>(R.id.tvOptionC)
-        val optionD = findViewById<TextView>(R.id.tvOptionD)
-
-        val question = questionList!![currentPosition ]
-
-        val questionTextView = findViewById<TextView>(R.id.questionText)
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        val progressText = findViewById<TextView>(R.id.progressBarText)
-        val submitButton = findViewById<Button>(R.id.submitBtn)
-
-        defaultOptionsView()
-        submitButton.text = "Submit"
-        questionTextView.text = question!!.question
-        progressBar.progress = currentPosition
-        progressText.text = "$currentPosition" + "/" + questionList!!.size
-        optionA.text = question.optionA
-        optionB.text = question.optionB
-        optionC.text = question.optionC
-        optionD.text = question.optionD
-        correctOption = question.correctOption;
-    }
-
-    private fun defaultOptionsView() {
-        val optionA = findViewById<TextView>(R.id.tvOptionA)
-        val optionB = findViewById<TextView>(R.id.tvOptionB)
-        val optionC = findViewById<TextView>(R.id.tvOptionC)
-        val optionD = findViewById<TextView>(R.id.tvOptionD)
-        val options = ArrayList<TextView>()
-        options.add(0, optionA)
-        options.add(1, optionB)
-        options.add(2, optionC)
-        options.add(3, optionD)
-
-        for (option in options) {
-            option.setTextColor(Color.parseColor("#7A8089"))
-            option.typeface = Typeface.DEFAULT
-            option.background = ContextCompat.getDrawable(
-                this,
-                R.drawable.default_text_background)
-
-        }
-
-    }
-
-    private fun correctAnswerView(selectedOption: String?) {
-        // TODO: display correct answer
-        when(selectedOption) {
-            "A" -> {
-                findViewById<TextView>(R.id.tvOptionA).background = ContextCompat.getDrawable(this, R.drawable.wrong_option_text_background)
-            }
-            "B" -> {
-                findViewById<TextView>(R.id.tvOptionB).background = ContextCompat.getDrawable(this, R.drawable.wrong_option_text_background)
-            }
-            "C" -> {
-                findViewById<TextView>(R.id.tvOptionC).background = ContextCompat.getDrawable(this, R.drawable.wrong_option_text_background)
-            }
-            "D" -> {
-                findViewById<TextView>(R.id.tvOptionD).background = ContextCompat.getDrawable(this, R.drawable.wrong_option_text_background)
-            }
-        }
     }
 
     override fun onClick(view: View?) {
@@ -182,6 +115,84 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.example_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.item1 -> {
+                FirebaseUtil.logout(this)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setQuestion() {
+        val optionA = findViewById<TextView>(R.id.tvOptionA)
+        val optionB = findViewById<TextView>(R.id.tvOptionB)
+        val optionC = findViewById<TextView>(R.id.tvOptionC)
+        val optionD = findViewById<TextView>(R.id.tvOptionD)
+
+        val question = questionList!![currentPosition ]
+
+        val questionTextView = findViewById<TextView>(R.id.questionText)
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        val progressText = findViewById<TextView>(R.id.progressBarText)
+        val submitButton = findViewById<Button>(R.id.submitBtn)
+
+        defaultOptionsView()
+        submitButton.text = "Submit"
+        questionTextView.text = question!!.question
+        progressBar.progress = currentPosition
+        progressText.text = "$currentPosition" + "/" + questionList!!.size
+        optionA.text = question.optionA
+        optionB.text = question.optionB
+        optionC.text = question.optionC
+        optionD.text = question.optionD
+        correctOption = question.correctOption;
+    }
+
+    private fun defaultOptionsView() {
+        val optionA = findViewById<TextView>(R.id.tvOptionA)
+        val optionB = findViewById<TextView>(R.id.tvOptionB)
+        val optionC = findViewById<TextView>(R.id.tvOptionC)
+        val optionD = findViewById<TextView>(R.id.tvOptionD)
+        val options = ArrayList<TextView>()
+        options.add(0, optionA)
+        options.add(1, optionB)
+        options.add(2, optionC)
+        options.add(3, optionD)
+
+        for (option in options) {
+            option.setTextColor(Color.parseColor("#7A8089"))
+            option.typeface = Typeface.DEFAULT
+            option.background = ContextCompat.getDrawable(
+                this,
+                R.drawable.default_text_background)
+        }
+    }
+
+    private fun correctAnswerView(selectedOption: String?) {
+        // TODO: display correct answer
+        when(selectedOption) {
+            "A" -> {
+                findViewById<TextView>(R.id.tvOptionA).background = ContextCompat.getDrawable(this, R.drawable.wrong_option_text_background)
+            }
+            "B" -> {
+                findViewById<TextView>(R.id.tvOptionB).background = ContextCompat.getDrawable(this, R.drawable.wrong_option_text_background)
+            }
+            "C" -> {
+                findViewById<TextView>(R.id.tvOptionC).background = ContextCompat.getDrawable(this, R.drawable.wrong_option_text_background)
+            }
+            "D" -> {
+                findViewById<TextView>(R.id.tvOptionD).background = ContextCompat.getDrawable(this, R.drawable.wrong_option_text_background)
+            }
+        }
+    }
+
     private fun showCorrectOption (answer: Options) {
         when(answer) {
             Options.A -> {
@@ -207,10 +218,6 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun makeSubmitButtonClickable() {
-
-    }
-
     private fun selectedOptionView(tv: TextView, selectedOption: String) {
         Log.i("OnClick", "selectedOptionView: $selectedOption")
         defaultOptionsView()
@@ -219,6 +226,5 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         tv.setTextColor(Color.parseColor("#000000"))
         tv.background = ContextCompat.getDrawable(this,
             R.drawable.selected_option_text_background)
-
     }
 }

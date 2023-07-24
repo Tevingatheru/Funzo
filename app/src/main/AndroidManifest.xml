@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Funzo">
         <activity
-            android:name=".Register"
+            android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".LoginActivity"
             android:theme="@style/Theme.Funzo"
             android:exported="true">
             <intent-filter>
@@ -35,7 +35,7 @@
             android:name=".QuizActivity"
             android:exported="false" />
         <activity
-            android:name=".MenuActivity"
+            android:name=".SubjectListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
