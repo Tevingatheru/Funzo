@@ -44,7 +44,7 @@ class ResultActivity : AppCompatActivity() , OnClickListener {
         Log.i("Results Activity",  "id: + ${view?.id.toString()} ")
         when(view?.id) {
             R.id.playButton -> {
-                val intent = Intent(this, MenuActivity::class.java)
+                val intent = Intent(this, SubjectListActivity::class.java)
                 startActivity(intent)
             }
         }

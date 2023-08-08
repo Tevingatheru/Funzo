@@ -26,6 +26,11 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
     private var selectedOption: String? = null
     private var correctOption: Options? = null
     private val score : ScoreConstants = ScoreConstants
+    private lateinit var optionB: TextView
+    private lateinit var optionC: TextView
+    private lateinit var optionD: TextView
+    private lateinit var submitButton: Button
+    private lateinit var optionA: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,20 +38,28 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
 
         exam = intent.getParcelableExtra("exam")
         questionList = exam!!.questions
-        setQuestion()
 
-        val optionA = findViewById<TextView>(R.id.tvOptionA)
-        val optionB = findViewById<TextView>(R.id.tvOptionB)
-        val optionC = findViewById<TextView>(R.id.tvOptionC)
-        val optionD = findViewById<TextView>(R.id.tvOptionD)
-        val submitButton = findViewById<Button>(R.id.submitBtn)
-        optionA.setOnClickListener ( this )
-        optionB.setOnClickListener ( this )
-        optionC.setOnClickListener ( this )
-        optionD.setOnClickListener ( this )
-        submitButton.setOnClickListener ( this )
+        setQuestion()
+        initView()
+        setOnClickListener()
 
         ScoreConstants.resetScore(questionList!!.size, exam!!.threshold)
+    }
+
+    private fun setOnClickListener() {
+        optionA.setOnClickListener(this)
+        optionB.setOnClickListener(this)
+        optionC.setOnClickListener(this)
+        optionD.setOnClickListener(this)
+        submitButton.setOnClickListener(this)
+    }
+
+    private fun initView() {
+        optionA = findViewById<TextView>(R.id.tvOptionA)
+        optionB = findViewById<TextView>(R.id.tvOptionB)
+        optionC = findViewById<TextView>(R.id.tvOptionC)
+        optionD = findViewById<TextView>(R.id.tvOptionD)
+        submitButton = findViewById<Button>(R.id.submitBtn)
     }
 
     private fun setQuestion() {
@@ -55,7 +68,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         val optionC = findViewById<TextView>(R.id.tvOptionC)
         val optionD = findViewById<TextView>(R.id.tvOptionD)
 
-        val question = questionList!![currentPosition ]
+        val question = getCurrentQuestion()
 
         val questionTextView = findViewById<TextView>(R.id.questionText)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
@@ -73,6 +86,8 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         optionD.text = question.optionD
         correctOption = question.correctOption;
     }
+
+    private fun getCurrentQuestion() = questionList!![currentPosition]
 
     private fun defaultOptionsView() {
         val optionA = findViewById<TextView>(R.id.tvOptionA)
@@ -92,9 +107,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
                 this,
                 R.drawable.default_text_background
             )
-
         }
-
     }
 
     private fun correctAnswerView(selectedOption: String?) {
@@ -217,10 +230,6 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun makeSubmitButtonClickable() {
-
-    }
-
     private fun selectedOptionView(tv: TextView, selectedOption: String) {
         Log.i("OnClick", "selectedOptionView: $selectedOption")
         defaultOptionsView()
@@ -230,6 +239,5 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         tv.background = ContextCompat.getDrawable(this,
             R.drawable.selected_option_text_background
         )
-
     }
 }

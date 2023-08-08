@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MenuActivity">
+    tools:context=".view.SubjectListActivity">
     <LinearLayout
         android:id="@+id/linearView"
         android:layout_width="match_parent"
