@@ -1,4 +1,4 @@
-package com.learner.funzo.model
+package com.learner.funzo.viewModel
 
 import android.widget.ListAdapter
 import android.widget.ListView

@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import com.learner.funzo.model.ExamConstants
-import com.learner.funzo.model.ListHelper
+import com.learner.funzo.viewModel.ExamConstants
+import com.learner.funzo.viewModel.ListHelper
 import com.learner.funzo.R
-import com.learner.funzo.model.SubjectConstants
+import com.learner.funzo.viewModel.SubjectConstants
 
 class SubjectListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

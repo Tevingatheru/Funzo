@@ -1,6 +1,8 @@
-package com.learner.funzo.model
+package com.learner.funzo.viewModel
 
 import android.os.Parcelable
+import com.learner.funzo.model.Exam
+import com.learner.funzo.model.Question
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

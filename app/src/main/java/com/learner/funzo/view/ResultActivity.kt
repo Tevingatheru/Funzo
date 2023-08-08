@@ -9,7 +9,7 @@ import android.view.View.OnClickListener
 import android.widget.Button
 import android.widget.TextView
 import com.learner.funzo.R
-import com.learner.funzo.model.ScoreConstants
+import com.learner.funzo.viewModel.ScoreConstants
 
 class ResultActivity : AppCompatActivity() , OnClickListener {
 
