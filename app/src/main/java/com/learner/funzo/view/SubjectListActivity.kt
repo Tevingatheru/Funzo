@@ -8,6 +8,7 @@ import android.widget.ListView
 import com.learner.funzo.viewModel.ExamConstants
 import com.learner.funzo.viewModel.ListHelper
 import com.learner.funzo.R
+import com.learner.funzo.viewModel.QuestionConstants
 import com.learner.funzo.viewModel.SubjectConstants
 
 class SubjectListActivity : AppCompatActivity() {
@@ -20,9 +21,16 @@ class SubjectListActivity : AppCompatActivity() {
         listView.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listContent)
         ListHelper.getListViewSize(listView)
         listView.setOnItemClickListener { adapterView, view, i, l ->
+            val selectedSubject = listContent.get(i)
+            val subjectName = selectedSubject.name
+            val examConstants = ExamConstants
+
+            val exam = examConstants.createExam(subjectName).getExam()
 
             val intent = Intent(this, QuizActivity::class.java)
-            intent.putExtra("exam", ExamConstants.getExam())
+            intent.putExtra(QuizActivity.examKey, ExamConstants.getExam())
+            intent.putExtra(QuestionConstants.TOTAL_QUESTIONS, exam.questions.size.toString() )
+            intent.putExtra(QuestionConstants.CORRECT_ANSWERS, "0")
 
             startActivity(intent)
             finish()

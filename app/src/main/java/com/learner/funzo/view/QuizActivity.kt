@@ -31,12 +31,14 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var optionD: TextView
     private lateinit var submitButton: Button
     private lateinit var optionA: TextView
-
+    companion object {
+        const val examKey = "exam"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
 
-        exam = intent.getParcelableExtra("exam")
+        exam = intent.getParcelableExtra(examKey)
         questionList = exam!!.questions
 
         setQuestion()
@@ -79,7 +81,8 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         submitButton.text = "Submit"
         questionTextView.text = question!!.question
         progressBar.progress = currentPosition
-        progressText.text = "$currentPosition" + "/" + questionList!!.size
+        val text = "$currentPosition / ${questionList!!.size}"
+        progressText.text = text
         optionA.text = question.optionA
         optionB.text = question.optionB
         optionC.text = question.optionC
@@ -161,12 +164,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
                 val submitButton = findViewById<Button>(R.id.submitBtn)
 
                 if (currentPosition >= questionList!!.size ) {
-                    Toast.makeText(this,
-                        "You have completed the quiz",
-                        Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, ResultActivity::class.java)
-                    intent.putExtra("score", score)
-                    startActivity(intent)
+                    completeProcess()
                 }
                 else if(selectedOption != null ) {
                     Log.i("QuizActivity", "check: " + (submitButton.text == "Finish"))
@@ -178,31 +176,56 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
                             }
                         }
                     } else {
-                        val question = questionList?.get(currentPosition)
-                        if (question!!.correctOption != selectedOption?.let { Options.valueOf(it) }) {
-                            correctAnswerView(selectedOption)
-                        } else {
-                            ScoreConstants.addToCorrectResults()
-                        }
+                        validateAnswer()
 
                         correctOption?.let { showCorrectOption(it) }
 
-                        if (currentPosition+1 >= questionList!!.size) {
-                            submitButton.text = "Finish"
-                        } else {
-                            submitButton.text = "Next"
-                        }
+                        setSubmitButtonText(submitButton)
                         selectedOption = null
                         currentPosition++
                     }
                 }
                 else {
-                    Toast.makeText(this,
-                        "You must select an answer",
-                        Toast.LENGTH_SHORT).show()
+                    noAnswerSelectedProcess()
                 }
             }
         }
+    }
+
+    private fun setSubmitButtonText(submitButton: Button) {
+        if (currentPosition + 1 >= questionList!!.size) {
+            submitButton.text = "Finish"
+        } else {
+            submitButton.text = "Next"
+        }
+    }
+
+    private fun validateAnswer() {
+        val question = getCurrentQuestion()
+        if (question!!.correctOption != selectedOption?.let { Options.valueOf(it) }) {
+            correctAnswerView(selectedOption)
+        } else {
+            ScoreConstants.addToCorrectResults()
+        }
+    }
+
+    private fun noAnswerSelectedProcess() {
+        Toast.makeText(
+            this,
+            "You must select an answer",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun completeProcess() {
+        Toast.makeText(
+            this,
+            "You have completed the quiz",
+            Toast.LENGTH_SHORT
+        ).show()
+        val intent = Intent(this, ResultActivity::class.java)
+        intent.putExtra("score", score)
+        startActivity(intent)
     }
 
     private fun showCorrectOption (answer: Options) {
