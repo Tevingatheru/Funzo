@@ -1,6 +1,5 @@
 package com.learner.funzo.view
 
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -11,21 +10,18 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.learner.funzo.model.Options
-import com.learner.funzo.model.Question
 import com.learner.funzo.R
 import com.learner.funzo.viewModel.constant.ScoreConstants
-import com.learner.funzo.model.Exam
+import com.learner.funzo.viewModel.QuizActivityViewModel
+import com.learner.funzo.viewModel.QuizActivityViewModel.Companion.FINISH
+import com.learner.funzo.viewModel.QuizActivityViewModel.Companion.NEXT
+import com.learner.funzo.viewModel.QuizActivityViewModel.Companion.SUBMIT
 
-class QuizActivity : AppCompatActivity(), View.OnClickListener {
-
-    private var currentPosition:Int = 0
-    private var questionList: ArrayList<Question>? = null
-    private var exam: Exam? = null
-    private var selectedOption: String? = null
-    private var correctOption: Options? = null
-    private val score : ScoreConstants = ScoreConstants
+class QuizActivity : AppCompatActivity(), View.OnClickListener
+{
     private lateinit var optionB: TextView
     private lateinit var optionC: TextView
     private lateinit var optionD: TextView
@@ -34,6 +30,9 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var  progressText: TextView
     private lateinit var  progressBar: ProgressBar
     private lateinit var  questionTextView: TextView
+
+    private val viewModel: QuizActivityViewModel by viewModels()
+
     companion object {
         const val examKey = "exam"
     }
@@ -42,9 +41,8 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
 
-        exam = intent.getParcelableExtra(examKey)
-        questionList = exam!!.questions
-        ScoreConstants.resetScore(questionList!!.size, exam!!.threshold)
+        viewModel.setExam(intent.getParcelableExtra(examKey)!!)
+        ScoreConstants.resetScore(viewModel.getTotalNoOfQuestions(), viewModel.getThreshold())
 
         initView()
         setOnClickListener()
@@ -75,26 +73,28 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         val question = getCurrentQuestion()
 
         defaultOptionsView()
-        submitButton.text = "Submit"
+        submitButton.text = SUBMIT
         questionTextView.text = question!!.question
-        progressBar.progress = currentPosition
-        val text = "$currentPosition / ${questionList!!.size}"
-        progressText.text = text
         optionA.text = question.optionA
         optionB.text = question.optionB
         optionC.text = question.optionC
         optionD.text = question.optionD
-        correctOption = question.correctOption;
+        viewModel.setCorrectOption(question.correctOption!!)
+
+        val currentPosition = viewModel.getCurrentPosition()
+        progressBar.progress = currentPosition
+        val text = "$currentPosition / ${viewModel.getTotalNoOfQuestions()}"
+        progressText.text = text
     }
 
-    private fun getCurrentQuestion() = questionList!![currentPosition]
+    private fun getCurrentQuestion() = viewModel.getCurrentQuestionByPosition(viewModel.getCurrentPosition())
 
     private fun defaultOptionsView() {
         val options = ArrayList<TextView>()
-        options.add(0, findViewById<TextView>(R.id.tvOptionA))
-        options.add(1, findViewById<TextView>(R.id.tvOptionB))
-        options.add(2, findViewById<TextView>(R.id.tvOptionC))
-        options.add(3, findViewById<TextView>(R.id.tvOptionD))
+        options.add(findViewById(R.id.tvOptionA))
+        options.add(findViewById(R.id.tvOptionB))
+        options.add(findViewById(R.id.tvOptionC))
+        options.add(findViewById(R.id.tvOptionD))
 
         for (option in options) {
             option.setTextColor(Color.parseColor("#7A8089"))
@@ -134,9 +134,6 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         Log.i("OnClick", "click: "+ view!!.id)
-        Log.i("Result activity", String.format("check count %d >= %d = %s", currentPosition, questionList!!.size,
-            isExamComplete()
-        ))
 
         when(view.id) {
             R.id.tvOptionA -> {
@@ -159,7 +156,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
                 if (isExamComplete()) {
                     completeExamProcess()
                 }
-                else if(selectedOption != null ) {
+                else if(viewModel.selectedOption != null ) {
                     incompleteExamProcess()
                 }
                 else {
@@ -169,39 +166,39 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun isExamComplete() = currentPosition >= questionList!!.size
+    private fun isExamComplete() = viewModel.getCurrentPosition() >= viewModel.getTotalNoOfQuestions()
 
     private fun incompleteExamProcess() {
-        Log.i("QuizActivity", "check: " + (submitButton.text == "Finish"))
-        if (submitButton.text == "Finish") {
-            Log.i("Quiz Activity", "current count = $currentPosition")
+        Log.i("QuizActivity", "check: " + (submitButton.text == FINISH))
+        if (submitButton.text == FINISH) {
             when {
-                currentPosition < questionList!!.size -> {
+                viewModel.getCurrentPosition() < viewModel.getTotalNoOfQuestions() -> {
                     setQuestion()
                 }
             }
         } else {
-            validateAnswer()
+            validateAnswer(viewModel.selectedOption)
 
-            correctOption?.let { showCorrectOption(it) }
+            viewModel.getCorrectOption()?.let { showCorrectOption(it) }
 
             setSubmitButtonText(submitButton)
-            selectedOption = null
-            currentPosition++
+            viewModel.selectedOption = null
+            viewModel.nextPosition()
         }
     }
 
     private fun setSubmitButtonText(submitButton: Button) {
-        if (currentPosition + 1 >= questionList!!.size) {
-            submitButton.text = "Finish"
+        if (isExamComplete()) {
+            submitButton.text = FINISH
         } else {
-            submitButton.text = "Next"
+            submitButton.text = NEXT
         }
     }
 
-    private fun validateAnswer() {
+    private fun validateAnswer(selectedOption: String?) {
         val question = getCurrentQuestion()
-        if (question!!.correctOption != selectedOption?.let { Options.valueOf(it) }) {
+
+        if (question.correctOption != selectedOption?.let { Options.valueOf(it) }) {
             correctAnswerView(selectedOption)
         } else {
             ScoreConstants.addToCorrectResults()
@@ -222,9 +219,8 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
             "You have completed the quiz",
             Toast.LENGTH_SHORT
         ).show()
-        val intent = Intent(this, ResultActivity::class.java)
-        intent.putExtra("score", score)
-        startActivity(intent)
+        viewModel.navigateToResultActivity(applicationContext = this)
+        finish()
     }
 
     private fun showCorrectOption (answer: Options) {
@@ -255,7 +251,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
     private fun selectedOptionView(tv: TextView, selectedOption: String) {
         Log.i("OnClick", "selectedOptionView: $selectedOption")
         defaultOptionsView()
-        this.selectedOption = selectedOption
+        viewModel.selectedOption = selectedOption
         tv.typeface = Typeface.DEFAULT_BOLD
         tv.setTextColor(Color.parseColor("#000000"))
         tv.background = ContextCompat.getDrawable(this,
