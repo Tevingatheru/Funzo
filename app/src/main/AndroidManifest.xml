@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Funzo">
         <activity
-            android:name=".RegisterActivity"
+            android:name=".view.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".view.LoginActivity"
             android:theme="@style/Theme.Funzo"
             android:exported="true">
             <intent-filter>
@@ -22,15 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ResultActivity"
+        <activity android:name=".view.ResultActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".QuizActivity"
+            android:name=".view.QuizActivity"
             android:exported="false" />
         <activity
-            android:name=".SubjectListActivity"
+            android:name=".view.SubjectListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,9 +38,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
         </activity>
     </application>
-
 </manifest>

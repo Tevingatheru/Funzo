@@ -6,12 +6,15 @@ import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.learner.funzo.FirebaseUtil
 import com.learner.funzo.model.Options
 import com.learner.funzo.model.Question
 import com.learner.funzo.R
@@ -46,6 +49,21 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         setOnClickListener()
 
         ScoreConstants.resetScore(questionList!!.size, exam!!.threshold)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.example_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.item1 -> {
+                FirebaseUtil.logout(this)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setOnClickListener() {
