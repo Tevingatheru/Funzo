@@ -24,29 +24,46 @@ class ResultActivity : AppCompatActivity() , OnClickListener {
     }
 
     private fun setView() {
-        val nextButton = findViewById<Button>(R.id.playButton)
-        nextButton.setOnClickListener(this)
-        val scoreText = findViewById<TextView>(R.id.score)
-        scoreText.text = String.format("%d / %d",
-            ScoreConstants.getScore(),
-            ScoreConstants.getTotalNumberOfQuestions()
-        )
+        setNextButtonOnClickListener()
+        setScore()
+        setCompletionText()
+    }
+
+    private fun setCompletionText() {
         val completionText = findViewById<TextView>(R.id.completionMessage)
         if (ScoreConstants.passed()) {
             completionText.text = "You Passed"
-        }
-        else {
+        } else {
             completionText.text = "You Failed"
         }
+    }
+
+    private fun setScore() {
+        val scoreText = findViewById<TextView>(R.id.score)
+        scoreText.text = String.format(
+            "%d / %d",
+            ScoreConstants.getScore(),
+            ScoreConstants.getTotalNumberOfQuestions()
+        )
+    }
+
+    private fun setNextButtonOnClickListener() {
+        val nextButton = findViewById<Button>(R.id.playButton)
+        nextButton.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
         Log.i("Results Activity",  "id: + ${view?.id.toString()} ")
         when(view?.id) {
             R.id.playButton -> {
-                val intent = Intent(this, SubjectListActivity::class.java)
-                startActivity(intent)
+                startSubjectListActivity()
             }
         }
+    }
+
+    private fun startSubjectListActivity() {
+        val intent = Intent(this, SubjectListActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

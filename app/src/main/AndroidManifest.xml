@@ -12,11 +12,6 @@
         <activity
             android:name=".view.ResultActivity"
             android:exported="true" >
-
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".view.QuizActivity"
@@ -25,10 +20,6 @@
         <activity
             android:name=".view.SubjectListActivity"
             android:exported="true" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".view.MainActivity"

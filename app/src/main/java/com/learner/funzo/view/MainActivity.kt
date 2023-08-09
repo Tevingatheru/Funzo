@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val goToMenu  = findViewById<Button>(R.id.playBtn)
+        val goToMenu = findViewById<Button>(R.id.playBtn)
         goToMenu.setOnClickListener{
             val startIntent = Intent(this, SubjectListActivity::class.java)
             startActivity(startIntent)
