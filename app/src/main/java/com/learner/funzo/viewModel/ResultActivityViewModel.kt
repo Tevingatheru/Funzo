@@ -2,6 +2,7 @@ package com.learner.funzo.viewModel
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import com.learner.funzo.viewModel.constant.ScoreConstants
 import com.learner.funzo.viewModel.nav.NavigationHandler
 
 class ResultActivityViewModel : ViewModel() {

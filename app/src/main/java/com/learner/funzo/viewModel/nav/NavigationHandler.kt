@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import com.learner.funzo.view.QuizActivity
 import com.learner.funzo.view.SubjectListActivity
-import com.learner.funzo.viewModel.ExamConstants
-import com.learner.funzo.viewModel.QuestionConstants
+import com.learner.funzo.viewModel.constant.ExamConstants
+import com.learner.funzo.viewModel.constant.QuestionConstants
 
 object NavigationHandler {
     fun navigateToSubjectList(applicationContext: Context) {

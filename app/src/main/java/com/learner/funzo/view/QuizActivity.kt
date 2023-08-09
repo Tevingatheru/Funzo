@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat
 import com.learner.funzo.model.Options
 import com.learner.funzo.model.Question
 import com.learner.funzo.R
-import com.learner.funzo.viewModel.ScoreConstants
+import com.learner.funzo.viewModel.constant.ScoreConstants
 import com.learner.funzo.model.Exam
 
 class QuizActivity : AppCompatActivity(), View.OnClickListener {
@@ -73,7 +73,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setQuestion() {
         val question = getCurrentQuestion()
-        
+
         defaultOptionsView()
         submitButton.text = "Submit"
         questionTextView.text = question!!.question
@@ -138,7 +138,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
             isExamComplete()
         ))
 
-        when(view?.id ) {
+        when(view.id) {
             R.id.tvOptionA -> {
                 selectedOptionView(findViewById(R.id.tvOptionA), "A")
             }

@@ -1,4 +1,4 @@
-package com.learner.funzo.viewModel
+package com.learner.funzo.viewModel.constant
 
 import com.learner.funzo.model.Subject
 import java.util.*

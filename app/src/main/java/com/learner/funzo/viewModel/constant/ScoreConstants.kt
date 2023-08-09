@@ -1,4 +1,4 @@
-package com.learner.funzo.viewModel
+package com.learner.funzo.viewModel.constant
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

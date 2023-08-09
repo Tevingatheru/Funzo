@@ -12,7 +12,7 @@ import com.learner.funzo.R
 import com.learner.funzo.viewModel.ResultActivityViewModel
 import com.learner.funzo.viewModel.ResultActivityViewModel.Companion.YOU_FAILED
 import com.learner.funzo.viewModel.ResultActivityViewModel.Companion.YOU_PASSED
-import com.learner.funzo.viewModel.ScoreConstants
+import com.learner.funzo.viewModel.constant.ScoreConstants
 
 class ResultActivity : AppCompatActivity() , OnClickListener {
 
