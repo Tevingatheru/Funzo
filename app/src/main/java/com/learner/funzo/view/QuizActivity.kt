@@ -40,12 +40,11 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
 
         exam = intent.getParcelableExtra(examKey)
         questionList = exam!!.questions
+        ScoreConstants.resetScore(questionList!!.size, exam!!.threshold)
 
-        setQuestion()
         initView()
         setOnClickListener()
-
-        ScoreConstants.resetScore(questionList!!.size, exam!!.threshold)
+        setQuestion()
     }
 
     private fun setOnClickListener() {
@@ -65,11 +64,6 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setQuestion() {
-        val optionA = findViewById<TextView>(R.id.tvOptionA)
-        val optionB = findViewById<TextView>(R.id.tvOptionB)
-        val optionC = findViewById<TextView>(R.id.tvOptionC)
-        val optionD = findViewById<TextView>(R.id.tvOptionD)
-
         val question = getCurrentQuestion()
 
         val questionTextView = findViewById<TextView>(R.id.questionText)
@@ -93,15 +87,11 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
     private fun getCurrentQuestion() = questionList!![currentPosition]
 
     private fun defaultOptionsView() {
-        val optionA = findViewById<TextView>(R.id.tvOptionA)
-        val optionB = findViewById<TextView>(R.id.tvOptionB)
-        val optionC = findViewById<TextView>(R.id.tvOptionC)
-        val optionD = findViewById<TextView>(R.id.tvOptionD)
         val options = ArrayList<TextView>()
-        options.add(0, optionA)
-        options.add(1, optionB)
-        options.add(2, optionC)
-        options.add(3, optionD)
+        options.add(0, findViewById<TextView>(R.id.tvOptionA))
+        options.add(1, findViewById<TextView>(R.id.tvOptionB))
+        options.add(2, findViewById<TextView>(R.id.tvOptionC))
+        options.add(3, findViewById<TextView>(R.id.tvOptionD))
 
         for (option in options) {
             option.setTextColor(Color.parseColor("#7A8089"))
@@ -141,7 +131,9 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         Log.i("OnClick", "click: "+ view!!.id)
-        Log.i("Result activity", String.format("check count %d >= %d = %s",currentPosition, questionList!!.size, currentPosition >= questionList!!.size))
+        Log.i("Result activity", String.format("check count %d >= %d = %s", currentPosition, questionList!!.size,
+            isExamComplete()
+        ))
 
         when(view?.id ) {
             R.id.tvOptionA -> {
@@ -161,34 +153,38 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             R.id.submitBtn -> {
-                val submitButton = findViewById<Button>(R.id.submitBtn)
-
-                if (currentPosition >= questionList!!.size ) {
-                    completeProcess()
+                if (isExamComplete()) {
+                    completeExamProcess()
                 }
                 else if(selectedOption != null ) {
-                    Log.i("QuizActivity", "check: " + (submitButton.text == "Finish"))
-                    if (submitButton.text == "Finish") {
-                        Log.i("Quiz Activity", "current count = $currentPosition")
-                        when {
-                            currentPosition < questionList!!.size -> {
-                                setQuestion()
-                            }
-                        }
-                    } else {
-                        validateAnswer()
-
-                        correctOption?.let { showCorrectOption(it) }
-
-                        setSubmitButtonText(submitButton)
-                        selectedOption = null
-                        currentPosition++
-                    }
+                    incompleteExamProcess()
                 }
                 else {
                     noAnswerSelectedProcess()
                 }
             }
+        }
+    }
+
+    private fun isExamComplete() = currentPosition >= questionList!!.size
+
+    private fun incompleteExamProcess() {
+        Log.i("QuizActivity", "check: " + (submitButton.text == "Finish"))
+        if (submitButton.text == "Finish") {
+            Log.i("Quiz Activity", "current count = $currentPosition")
+            when {
+                currentPosition < questionList!!.size -> {
+                    setQuestion()
+                }
+            }
+        } else {
+            validateAnswer()
+
+            correctOption?.let { showCorrectOption(it) }
+
+            setSubmitButtonText(submitButton)
+            selectedOption = null
+            currentPosition++
         }
     }
 
@@ -217,7 +213,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         ).show()
     }
 
-    private fun completeProcess() {
+    private fun completeExamProcess() {
         Toast.makeText(
             this,
             "You have completed the quiz",
