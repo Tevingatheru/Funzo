@@ -1,18 +1,17 @@
 package com.learner.funzo.view
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import com.learner.funzo.viewModel.ExamConstants
+import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
 import com.learner.funzo.viewModel.ListHelper
 import com.learner.funzo.R
-import com.learner.funzo.model.Exam
-import com.learner.funzo.viewModel.QuestionConstants
-import com.learner.funzo.viewModel.SubjectConstants
+import com.learner.funzo.viewModel.SubjectListActivityViewModel
 
 class SubjectListActivity : AppCompatActivity() {
+    private val viewModel: SubjectListActivityViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
@@ -21,28 +20,16 @@ class SubjectListActivity : AppCompatActivity() {
 
     private fun setSubjectListView() {
         val listView = findViewById<ListView>(R.id.listView)
+        val subjectListView = viewModel.getSubjectsView()
 
-        val listContent = getSubjects()
-        listView.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listContent)
+        listView.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, subjectListView)
         ListHelper.getListViewSize(listView)
+
         listView.setOnItemClickListener { adapterView, view, i, l ->
-            val selectedSubject = listContent.get(i)
-            val subjectName = selectedSubject.name
+            val selectedSubject = subjectListView.get(i)
+            val exam = viewModel.getExamBySubjectView(selectedSubject)
 
-            val exam = ExamConstants.createExam(subjectName).getExam()
-
-            startQuizActivity(exam)
+            viewModel.navigateToQuizActivity(applicationContext = this, exam = exam)
         }
-    }
-
-    private fun getSubjects() = SubjectConstants.getSubjects()
-
-    private fun startQuizActivity(exam: Exam) {
-        val intent = Intent(this, QuizActivity::class.java)
-        intent.putExtra(QuizActivity.examKey, ExamConstants.getExam())
-        intent.putExtra(QuestionConstants.TOTAL_QUESTIONS, exam.questions.size.toString())
-
-        startActivity(intent)
-        finish()
     }
 }

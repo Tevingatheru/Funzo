@@ -1,5 +1,6 @@
 package com.learner.funzo.viewModel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.learner.funzo.viewModel.nav.NavigationHandler
@@ -7,9 +8,9 @@ import kotlinx.coroutines.launch
 
 class MainActivityViewModel : ViewModel() {
 
-    fun onPlayButtonClicked(navigationHandler: NavigationHandler) {
+    fun onPlayButtonClicked(applicationContext: Context) {
         viewModelScope.launch {
-            navigationHandler.navigateToSubjectList()
+            NavigationHandler.navigateToSubjectList(applicationContext = applicationContext)
         }
     }
 }

@@ -19,19 +19,8 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
 
-        // Create a navigation handler instance
-        val navigationHandler = object : NavigationHandler {
-            override fun navigateToSubjectList() {
-                val startIntent = Intent(this@MainActivity, SubjectListActivity::class.java)
-                startActivity(startIntent)
-                finish()
-            }
-        }
-
         findViewById<Button>(R.id.playBtn).setOnClickListener {
-            viewModel.onPlayButtonClicked(navigationHandler)
+            viewModel.onPlayButtonClicked(this)
         }
     }
-
-
 }
