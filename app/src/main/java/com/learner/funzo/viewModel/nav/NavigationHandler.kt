@@ -20,4 +20,9 @@ object NavigationHandler {
 
         applicationContext.startActivity(intent)
     }
+
+    fun navigateToSubjectListActivity(applicationContext: Context) {
+        val intent = Intent(applicationContext, SubjectListActivity::class.java)
+        applicationContext.startActivity(intent)
+    }
 }

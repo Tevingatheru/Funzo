@@ -31,9 +31,13 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var optionD: TextView
     private lateinit var submitButton: Button
     private lateinit var optionA: TextView
+    private lateinit var  progressText: TextView
+    private lateinit var  progressBar: ProgressBar
+    private lateinit var  questionTextView: TextView
     companion object {
         const val examKey = "exam"
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
@@ -61,16 +65,15 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         optionC = findViewById<TextView>(R.id.tvOptionC)
         optionD = findViewById<TextView>(R.id.tvOptionD)
         submitButton = findViewById<Button>(R.id.submitBtn)
+        questionTextView = findViewById<TextView>(R.id.questionText)
+        progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        progressText = findViewById<TextView>(R.id.progressBarText)
+        submitButton = findViewById<Button>(R.id.submitBtn)
     }
 
     private fun setQuestion() {
         val question = getCurrentQuestion()
-
-        val questionTextView = findViewById<TextView>(R.id.questionText)
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        val progressText = findViewById<TextView>(R.id.progressBarText)
-        val submitButton = findViewById<Button>(R.id.submitBtn)
-
+        
         defaultOptionsView()
         submitButton.text = "Submit"
         questionTextView.text = question!!.question
