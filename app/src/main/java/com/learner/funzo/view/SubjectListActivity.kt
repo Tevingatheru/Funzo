@@ -6,14 +6,10 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.learner.funzo.FirebaseUtil
-import com.learner.funzo.viewModel.ExamConstants
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import com.learner.funzo.viewModel.ListHelper
 import com.learner.funzo.R
-import com.learner.funzo.model.Exam
-import com.learner.funzo.viewModel.QuestionConstants
-import com.learner.funzo.viewModel.SubjectConstants
 import com.learner.funzo.viewModel.SubjectListActivityViewModel
 
 class SubjectListActivity : AppCompatActivity() {
