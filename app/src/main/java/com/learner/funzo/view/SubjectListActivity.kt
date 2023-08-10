@@ -1,12 +1,19 @@
 package com.learner.funzo.view
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import com.learner.funzo.FirebaseUtil
+import com.learner.funzo.viewModel.ExamConstants
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import com.learner.funzo.viewModel.ListHelper
 import com.learner.funzo.R
+import com.learner.funzo.model.Exam
+import com.learner.funzo.viewModel.QuestionConstants
+import com.learner.funzo.viewModel.SubjectConstants
 import com.learner.funzo.viewModel.SubjectListActivityViewModel
 
 class SubjectListActivity : AppCompatActivity() {
@@ -14,8 +21,23 @@ class SubjectListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu)
+        setContentView(R.layout.activity_subject_list)
         setSubjectListView()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.example_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.item1 -> {
+                FirebaseUtil.logout(this)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setSubjectListView() {
