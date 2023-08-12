@@ -7,24 +7,16 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.learner.funzo.retrofit.BackendClientGenerator
 import com.learner.funzo.retrofit.SubjectClient
 import com.learner.funzo.retrofit.dto.SubjectListDto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class SubjectListActivity : AppCompatActivity() {
-    var httpClient = OkHttpClient.Builder()
-    var retrofit = Retrofit.Builder()
-        .baseUrl("http://10.0.2.2:8080/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(httpClient.build())
-        .build()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +62,7 @@ class SubjectListActivity : AppCompatActivity() {
     }
 
     private suspend fun getSubjects(): List<Subject> {
-        val subjectClient: SubjectClient = retrofit.create(SubjectClient::class.java)
+        val subjectClient: SubjectClient = BackendClientGenerator.createClient(SubjectClient::class.java)
 
         val call: Call<SubjectListDto> = subjectClient.getAll()
 
