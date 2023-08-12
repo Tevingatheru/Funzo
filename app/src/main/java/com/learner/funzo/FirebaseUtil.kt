@@ -33,6 +33,8 @@ class FirebaseUtil {
             mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        // create user
+
                         Toast.makeText(
                             applicationContext, "Account created.",
                             Toast.LENGTH_SHORT
