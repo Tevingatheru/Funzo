@@ -5,21 +5,23 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
+import java.lang.RuntimeException
 
-class BackendClientGenerator {
-    companion object {
-        private val BASE_URL = "http://10.0.2.2:8080/"
-        private val httpClient = OkHttpClient.Builder()
+object BackendClientGenerator {
 
-        private val builder = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create()).client(httpClient.build())
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("http://10.0.2.2:8080/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(OkHttpClient.Builder().build())
+        .build()
 
-        private val retrofit = builder.build()
-
-        @JvmStatic
-        fun <S> createClient(serviceClass: Class<S>?): S {
-            return retrofit.create(serviceClass)
+    @JvmStatic
+    fun <S> createClient(serviceClass: Class<S>?): S {
+        return try{
+            retrofit.create(serviceClass)
+        } catch (e: Exception) {
+            throw RuntimeException("Unable to create retro client. className: ${serviceClass!!.name}")
         }
     }
 }

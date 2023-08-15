@@ -9,7 +9,7 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.learner.funzo.retrofit.BackendClientGenerator
 import com.learner.funzo.retrofit.SubjectClient
-import com.learner.funzo.retrofit.dto.SubjectListDto
+import com.learner.funzo.retrofit.response.SubjectListResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -45,7 +45,7 @@ class SubjectListActivity : AppCompatActivity() {
         listView.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listContent)
         ListHelper.getListViewSize(listView)
         listView.setOnItemClickListener { adapterView, view, i, l ->
-    //            Log.i("Check", listContent.get(i).toString() + " id: " + l )
+            //            Log.i("Check", listContent.get(i).toString() + " id: " + l )
             val selectedSubject = listContent.get(i)
             val subjectName = selectedSubject.name
             val examConstants = ExamConstants
@@ -64,23 +64,25 @@ class SubjectListActivity : AppCompatActivity() {
     private suspend fun getSubjects(): List<Subject> {
         val subjectClient: SubjectClient = BackendClientGenerator.createClient(SubjectClient::class.java)
 
-        val call: Call<SubjectListDto> = subjectClient.getAll()
+        val call: Call<SubjectListResponse> = subjectClient.getAll()
 
         return withContext(Dispatchers.IO) {
-            val response: Response<SubjectListDto> = call.execute()
+            val response: Response<SubjectListResponse> = call.execute()
 
-            val subjectListDto: SubjectListDto = response.body()!!
-
-
-            val listOfSubjects: List<Subject> = mapToList(subjectListDto)
+            val subjectListResponse: SubjectListResponse = response.body()!!
+            val listOfSubjects: List<Subject> = if (subjectListResponse.subjects != null && subjectListResponse.subjects.isNotEmpty()) {
+                mapToList(subjectListResponse)
+            } else {
+                mapToList(SubjectListResponse(ArrayList()))
+            }
             listOfSubjects
         }
     }
 
-    private fun mapToList(subjectListDto: SubjectListDto): List<Subject> {
+    private fun mapToList(subjectListResponse: SubjectListResponse): List<Subject> {
         var subjectList : List<Subject> = mutableListOf()
         val i = 1
-        subjectListDto.listSubjectDto.forEach{
+        subjectListResponse.subjects.forEach{
             subjectList = subjectList.plus(Subject(i, it.name, it.category))
         }
         return subjectList
