@@ -1,4 +1,4 @@
-package com.learner.funzo.retrofit.request
+package com.learner.funzo.model.retrofit.request
 
 data class CreateUserRequest(
     val userType: String = "student",

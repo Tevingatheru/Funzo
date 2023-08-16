@@ -1,4 +1,4 @@
-package com.learner.funzo.retrofit.response
+package com.learner.funzo.model.retrofit.response
 
 data class SubjectResponse (val category: String,
                             val code: String,

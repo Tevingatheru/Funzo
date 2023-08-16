@@ -1,4 +1,4 @@
-package com.learner.funzo.retrofit
+package com.learner.funzo.model.retrofit
 
 import okhttp3.OkHttpClient
 
