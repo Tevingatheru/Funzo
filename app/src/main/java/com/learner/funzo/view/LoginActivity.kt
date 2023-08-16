@@ -1,4 +1,4 @@
-package com.learner.funzo
+package com.learner.funzo.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.learner.funzo.FirebaseUtil
+import com.learner.funzo.R
 
 class LoginActivity : AppCompatActivity() {
     var editTextEmail: TextInputEditText? = null

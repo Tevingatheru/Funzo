@@ -1,5 +1,6 @@
-package com.learner.funzo
+package com.learner.funzo.viewModel.constant
 
+import com.learner.funzo.model.Subject
 import java.util.*
 
 object SubjectConstants {

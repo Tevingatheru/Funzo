@@ -1,11 +1,18 @@
-package com.learner.funzo
+package com.learner.funzo.view
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import com.learner.funzo.FirebaseUtil
+import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
+import com.learner.funzo.viewModel.ListHelper
+import com.learner.funzo.R
+import com.learner.funzo.viewModel.SubjectListActivityViewModel
 import androidx.appcompat.app.AppCompatActivity
 import com.learner.funzo.retrofit.BackendClientGenerator
 import com.learner.funzo.retrofit.SubjectClient
@@ -17,48 +24,12 @@ import retrofit2.Call
 import retrofit2.Response
 
 class SubjectListActivity : AppCompatActivity() {
+    private val viewModel: SubjectListActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subject_list)
-        val listView = findViewById<ListView>(R.id.listView)
-
-        var listOfSubjects: List<Subject>
-        runBlocking {
-            listOfSubjects = getSubjects()
-            listView(listOfSubjects, listView)
-        }
-    }
-
-    private fun listView(
-        listOfSubjects: List<Subject>,
-        listView: ListView
-    ) {
-        extracted(listOfSubjects, listView)
-    }
-
-    private fun extracted(
-        listOfSubjects: List<Subject>,
-        listView: ListView
-    ) {
-        val listContent = listOfSubjects
-        listView.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listContent)
-        ListHelper.getListViewSize(listView)
-        listView.setOnItemClickListener { adapterView, view, i, l ->
-            //            Log.i("Check", listContent.get(i).toString() + " id: " + l )
-            val selectedSubject = listContent.get(i)
-            val subjectName = selectedSubject.name
-            val examConstants = ExamConstants
-
-            val exam = examConstants.createExam(subjectName).getExam()
-
-            val intent = Intent(this, QuizActivity::class.java)
-            intent.putExtra("exam", examConstants.getExam())
-            intent.putExtra(QuestionConstants.TOTAL_QUESTIONS, exam.questions.size.toString())
-            intent.putExtra(QuestionConstants.CORRECT_ANSWERS, "0")
-            startActivity(intent)
-            finish()
-        }
+        setSubjectListView()
     }
 
     private suspend fun getSubjects(): List<Subject> {
@@ -100,6 +71,21 @@ class SubjectListActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setSubjectListView() {
+        val listView = findViewById<ListView>(R.id.listView)
+        val subjectListView = viewModel.getSubjectsView()
+
+        listView.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, subjectListView)
+        ListHelper.getListViewSize(listView)
+
+        listView.setOnItemClickListener { adapterView, view, i, l ->
+            val selectedSubject = subjectListView.get(i)
+            val exam = viewModel.getExamBySubjectView(selectedSubject)
+
+            viewModel.navigateToQuizActivity(applicationContext = this, exam = exam)
         }
     }
 }

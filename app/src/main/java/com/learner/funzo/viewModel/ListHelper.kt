@@ -1,4 +1,4 @@
-package com.learner.funzo
+package com.learner.funzo.viewModel
 
 import android.widget.ListAdapter
 import android.widget.ListView
@@ -17,5 +17,4 @@ object ListHelper {
         params.height = totalHeight + myListView.dividerHeight * (myListAdapter.count - 1 )
         myListView.layoutParams = params
     }
-
 }

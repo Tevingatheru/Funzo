@@ -9,6 +9,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.learner.funzo.view.LoginActivity
+import com.learner.funzo.view.MainActivity
 import com.learner.funzo.retrofit.BackendClientGenerator
 import com.learner.funzo.retrofit.UserClient
 import com.learner.funzo.retrofit.request.CreateUserRequest
