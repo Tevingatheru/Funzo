@@ -1,16 +1,14 @@
 package com.learner.funzo.view
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
-import com.learner.funzo.FirebaseUtil
+import com.learner.funzo.util.FirebaseUtil
 import androidx.lifecycle.ViewModelProvider
 import com.learner.funzo.R
 import com.learner.funzo.viewModel.MainActivityViewModel
-import com.learner.funzo.viewModel.nav.NavigationHandler
 
 class MainActivity : AppCompatActivity() {
 

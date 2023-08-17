@@ -14,7 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import com.learner.funzo.FirebaseUtil
+import com.learner.funzo.util.FirebaseUtil
 import com.learner.funzo.model.Options
 import com.learner.funzo.R
 import com.learner.funzo.viewModel.constant.ScoreConstants
@@ -99,6 +99,10 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener
         optionD.text = question.optionD
         viewModel.setCorrectOption(question.correctOption!!)
 
+        setProgressBar()
+    }
+
+    private fun setProgressBar() {
         val currentPosition = viewModel.getCurrentPosition()
         progressBar.progress = currentPosition
         val text = "$currentPosition / ${viewModel.getTotalNoOfQuestions()}"
@@ -155,19 +159,19 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener
 
         when(view.id) {
             R.id.tvOptionA -> {
-                selectedOptionView(findViewById(R.id.tvOptionA), "A")
+                selectedOptionView(tv = findViewById(R.id.tvOptionA), selectedOption = "A")
             }
 
             R.id.tvOptionB -> {
-                selectedOptionView(findViewById(R.id.tvOptionB), "B")
+                selectedOptionView(tv = findViewById(R.id.tvOptionB), selectedOption = "B")
             }
 
             R.id.tvOptionC -> {
-                selectedOptionView(findViewById(R.id.tvOptionC), "C")
+                selectedOptionView(tv = findViewById(R.id.tvOptionC), selectedOption = "C")
             }
 
             R.id.tvOptionD -> {
-                selectedOptionView(findViewById(R.id.tvOptionD), "D")
+                selectedOptionView(tv = findViewById(R.id.tvOptionD), selectedOption = "D")
             }
 
             R.id.submitBtn -> {
@@ -177,11 +181,19 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener
                 else if(viewModel.selectedOption != null ) {
                     incompleteExamProcess()
                 }
-                else {
+                else if (isNextPhase()) {
+                    setQuestion()
+                }
+                else
+                {
                     noAnswerSelectedProcess()
                 }
             }
         }
+    }
+
+    private fun isNextPhase(): Boolean {
+        return submitButton.text == NEXT
     }
 
     private fun isExamComplete() = viewModel.getCurrentPosition() >= viewModel.getTotalNoOfQuestions()

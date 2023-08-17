@@ -23,6 +23,18 @@ object QuestionConstants {
                 optionD = "Yes",
                 correctOption = Options.D
             ))
+
+        questionsList.add(
+            Question(
+                id = 2,
+                question = "Can you see this? (Yes or No)",
+                image = "",
+                optionA = "Yes",
+                optionB = "No",
+                optionC = "Next page",
+                optionD = "Zzz",
+                correctOption = Options.A
+            ))
         return questionsList
     }
 }

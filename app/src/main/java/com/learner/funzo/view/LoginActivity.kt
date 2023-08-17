@@ -9,7 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
-import com.learner.funzo.FirebaseUtil
+import com.learner.funzo.util.FirebaseUtil
 import com.learner.funzo.R
 
 class LoginActivity : AppCompatActivity() {
