@@ -62,13 +62,14 @@
                 android:progress="0"
                 android:indeterminate="false">
             </ProgressBar>
+
             <TextView
                 android:id="@+id/progressBarText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textColorHint="#7A8089"
-                android:textSize="12dp"
+                android:textSize="20sp"
                 android:padding="15dp"
                 android:text="0/10">
             </TextView>
