@@ -14,7 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import com.learner.funzo.FirebaseUtil
+import com.learner.funzo.util.FirebaseUtil
 import com.learner.funzo.model.Options
 import com.learner.funzo.R
 import com.learner.funzo.viewModel.constant.ScoreConstants
@@ -37,7 +37,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener
     private val viewModel: QuizActivityViewModel by viewModels()
 
     companion object {
-        const val examKey = "exam"
+        private const val examKey = "exam"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

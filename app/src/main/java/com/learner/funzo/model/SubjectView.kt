@@ -1,4 +1,4 @@
-package com.learner.funzo.view
+package com.learner.funzo.model
 
 import android.view.View
 

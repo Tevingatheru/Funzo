@@ -1,4 +1,4 @@
-package com.learner.funzo
+package com.learner.funzo.util
 
 import android.content.Context
 import android.content.Intent

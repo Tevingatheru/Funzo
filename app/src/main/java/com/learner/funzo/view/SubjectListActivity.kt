@@ -5,7 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import com.learner.funzo.FirebaseUtil
+import com.learner.funzo.util.FirebaseUtil
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import com.learner.funzo.viewModel.ListHelper
