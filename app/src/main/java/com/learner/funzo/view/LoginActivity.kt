@@ -40,8 +40,8 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
     }
 
     private fun initializeLoginView() {
-        editTextEmail = findViewById(R.id.email)
-        editTextPassword = findViewById(R.id.password)
+        loginActivityViewModel.setEditTextEmail(findViewById(R.id.email))
+        loginActivityViewModel.setEditTextPassword(findViewById(R.id.password))
         buttonLogin = findViewById(R.id.btn_login)
         textView = findViewById(R.id.registerNow)
     }
@@ -49,8 +49,8 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
     override fun onClick(p0: View?) {
         when(p0) {
             buttonLogin -> {
-                val email: String = editTextEmail!!.getText().toString()
-                val password: String = editTextPassword!!.getText().toString()
+                val email: String = loginActivityViewModel.getEditTextEmail()
+                val password: String = loginActivityViewModel.getEditTextPassword()
                 when {
                     TextUtils.isEmpty(email) -> {
                         Toast.makeText(this@LoginActivity, "Enter Email", Toast.LENGTH_SHORT).show()

@@ -37,7 +37,8 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener
     private val viewModel: QuizActivityViewModel by viewModels()
 
     companion object {
-        private const val examKey = "exam"
+        const val examKey = "exam"
+        private const val TAG = "QuizActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -151,7 +152,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener
     }
 
     override fun onClick(view: View?) {
-        Log.i("OnClick", "click: "+ view!!.id)
+        Log.i(TAG, "click: "+ view!!.id)
 
         when(view.id) {
             R.id.tvOptionA -> {
@@ -187,7 +188,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener
     private fun isExamComplete() = viewModel.getCurrentPosition() >= viewModel.getTotalNoOfQuestions()
 
     private fun incompleteExamProcess() {
-        Log.i("QuizActivity", "check: " + (submitButton.text == FINISH))
+        Log.i(TAG, "check: " + (submitButton.text == FINISH))
         if (submitButton.text == FINISH) {
             when {
                 viewModel.getCurrentPosition() < viewModel.getTotalNoOfQuestions() -> {
@@ -267,7 +268,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener
     }
 
     private fun selectedOptionView(tv: TextView, selectedOption: String) {
-        Log.i("OnClick", "selectedOptionView: $selectedOption")
+        Log.i(TAG, "selectedOptionView: $selectedOption")
         defaultOptionsView()
         viewModel.selectedOption = selectedOption
         tv.typeface = Typeface.DEFAULT_BOLD

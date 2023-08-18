@@ -35,10 +35,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        editTextEmail = findViewById(R.id.email)
-        editTextPassword = findViewById(R.id.password)
+        registerActivityViewModel.setEditTextEmail(findViewById(R.id.email))
+        registerActivityViewModel.setEditTextPassword(findViewById(R.id.password))
         buttonReg = findViewById(R.id.btn_register)
         textView = findViewById(R.id.loginNow)
+
         textView!!.setOnClickListener(this)
         try {
             buttonReg!!.setOnClickListener(this)
@@ -58,8 +59,8 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                 finish()
             }
             buttonReg -> {
-                val email: String = editTextEmail!!.getText().toString()
-                val password: String = editTextPassword!!.getText().toString()
+                val email: String = registerActivityViewModel.getEditTextEmail()
+                val password: String = registerActivityViewModel.getEditTextPassword()
 
                 when {
                     TextUtils.isEmpty(email) -> {
@@ -70,11 +71,15 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                     }
                     else -> {
                         FirebaseUtil.register(this, email, password)
-                        editTextEmail!!.setText("")
-                        editTextPassword!!.setText("")
+                        clearRegistrationForm()
                     }
                 }
             }
         }
+    }
+
+    private fun clearRegistrationForm() {
+        editTextEmail!!.setText("")
+        editTextPassword!!.setText("")
     }
 }

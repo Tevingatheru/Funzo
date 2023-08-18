@@ -3,6 +3,7 @@ package com.learner.funzo.viewModel.nav
 import android.content.Context
 import android.content.Intent
 import com.learner.funzo.view.LoginActivity
+import com.learner.funzo.view.MainActivity
 import com.learner.funzo.view.QuizActivity
 import com.learner.funzo.view.RegisterActivity
 import com.learner.funzo.view.ResultActivity
@@ -41,8 +42,13 @@ object NavigationHandler {
         applicationContext.startActivity(intent)
     }
 
-    fun navigateToLoginActivity(applicationContext: RegisterActivity) {
+    fun navigateToLoginActivity(applicationContext: Context) {
         val intent = Intent(applicationContext, LoginActivity::class.java)
+        applicationContext.startActivity(intent)
+    }
+
+    fun navigateToMainActivity(applicationContext: Context) {
+        val intent = Intent(applicationContext, MainActivity::class.java)
         applicationContext.startActivity(intent)
     }
 }
