@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.learner.funzo.model.Exam
 import com.learner.funzo.model.Subject
-import com.learner.funzo.view.SubjectView
+import com.learner.funzo.model.SubjectView
 import com.learner.funzo.viewModel.constant.ExamConstants
 import com.learner.funzo.viewModel.constant.SubjectConstants
 import com.learner.funzo.viewModel.nav.NavigationHandler
@@ -22,7 +22,8 @@ class SubjectListActivityViewModel: ViewModel()
                 SubjectView(
                     name = it.name,
                     category = it.category
-                ))
+                )
+            )
         }
         return subjectViewList
     }

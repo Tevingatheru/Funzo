@@ -14,7 +14,7 @@ import com.learner.funzo.viewModel.SubjectListActivityViewModel
 
 class SubjectListActivity : AppCompatActivity() {
     private val viewModel: SubjectListActivityViewModel by viewModels()
-
+    private lateinit var listView: ListView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subject_list)
@@ -37,13 +37,13 @@ class SubjectListActivity : AppCompatActivity() {
     }
 
     private fun setSubjectListView() {
-        val listView = findViewById<ListView>(R.id.listView)
+        listView = findViewById<ListView>(R.id.listView)
         val subjectListView = viewModel.getSubjectsView()
 
         listView.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, subjectListView)
         ListHelper.getListViewSize(listView)
 
-        listView.setOnItemClickListener { adapterView, view, i, l ->
+        listView.setOnItemClickListener { _, _, i, _ ->
             val selectedSubject = subjectListView.get(i)
             val exam = viewModel.getExamBySubjectView(selectedSubject)
 
