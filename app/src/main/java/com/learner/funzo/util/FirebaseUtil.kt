@@ -3,8 +3,6 @@ package com.learner.funzo.util
 import android.content.Context
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.learner.funzo.viewModel.nav.NavigationHandler
 
 class FirebaseUtil {

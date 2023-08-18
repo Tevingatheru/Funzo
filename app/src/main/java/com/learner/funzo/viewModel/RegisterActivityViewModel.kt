@@ -1,7 +1,5 @@
 package com.learner.funzo.viewModel
 
-import android.widget.Button
-import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import com.google.android.material.textfield.TextInputEditText
 
