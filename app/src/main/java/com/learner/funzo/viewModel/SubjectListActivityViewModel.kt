@@ -7,12 +7,18 @@ import com.learner.funzo.model.retrofit.BackendClientGenerator
 import com.learner.funzo.model.retrofit.SubjectClient
 import com.learner.funzo.model.retrofit.SubjectClientImpl
 import com.learner.funzo.view.SubjectView
+import com.learner.funzo.model.Subject
+import com.learner.funzo.model.SubjectView
 import com.learner.funzo.viewModel.constant.ExamConstants
+import com.learner.funzo.viewModel.constant.SubjectConstants
 import com.learner.funzo.viewModel.nav.NavigationHandler
 import kotlinx.coroutines.runBlocking
 
 class SubjectListActivityViewModel: ViewModel()
 {
+    private fun getSubjects(): List<Subject> {
+        return SubjectConstants.getSubjects()
+    }
 
     fun getSubjectsView(): List<SubjectView> {
         return runBlocking {

@@ -1,12 +1,12 @@
 package com.learner.funzo.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import com.learner.funzo.FirebaseUtil
+import com.learner.funzo.util.FirebaseUtil
+import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import com.learner.funzo.viewModel.ListHelper
 import com.learner.funzo.R
@@ -14,7 +14,7 @@ import com.learner.funzo.viewModel.SubjectListActivityViewModel
 
 class SubjectListActivity : AppCompatActivity() {
     private val viewModel: SubjectListActivityViewModel by viewModels()
-
+    private lateinit var listView: ListView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subject_list)
@@ -38,7 +38,7 @@ class SubjectListActivity : AppCompatActivity() {
     }
 
     private fun setSubjectListView() {
-        val listView = findViewById<ListView>(R.id.listView)
+        listView = findViewById<ListView>(R.id.listView)
         val subjectListView = viewModel.getSubjectsView()
 
         listView.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, subjectListView)
