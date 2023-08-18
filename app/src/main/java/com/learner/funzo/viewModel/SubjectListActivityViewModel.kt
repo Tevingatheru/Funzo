@@ -6,28 +6,21 @@ import com.learner.funzo.model.Exam
 import com.learner.funzo.model.retrofit.BackendClientGenerator
 import com.learner.funzo.model.retrofit.SubjectClient
 import com.learner.funzo.model.retrofit.SubjectClientImpl
-import com.learner.funzo.view.SubjectView
-import com.learner.funzo.model.Subject
-import com.learner.funzo.model.SubjectView
+import com.learner.funzo.model.retrofit.dto.SubjectDto
 import com.learner.funzo.viewModel.constant.ExamConstants
-import com.learner.funzo.viewModel.constant.SubjectConstants
 import com.learner.funzo.viewModel.nav.NavigationHandler
 import kotlinx.coroutines.runBlocking
 
 class SubjectListActivityViewModel: ViewModel()
 {
-    private fun getSubjects(): List<Subject> {
-        return SubjectConstants.getSubjects()
-    }
-
-    fun getSubjectsView(): List<SubjectView> {
+    fun getSubjectsView(): List<SubjectDto> {
         return runBlocking {
             SubjectClientImpl(BackendClientGenerator.createClient(SubjectClient::class.java)).getAll()
         }
     }
 
-    fun getExamBySubjectView(subjectView: SubjectView): Exam {
-        return ExamConstants.createExam(subjectView.name).getExam()
+    fun getExamBySubjectView(subjectDto: SubjectDto): Exam {
+        return ExamConstants.createExam(subjectDto.name).getExam()
     }
 
     fun navigateToQuizActivity(applicationContext: Context, exam: Exam) {

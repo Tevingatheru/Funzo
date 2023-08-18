@@ -15,8 +15,7 @@ import com.learner.funzo.viewModel.LoginActivityViewModel
 import com.learner.funzo.viewModel.nav.NavigationHandler
 
 class LoginActivity : AppCompatActivity() , View.OnClickListener{
-    private var editTextEmail: TextInputEditText? = null
-    private var editTextPassword: TextInputEditText? = null
+
     private var buttonLogin: Button? = null
     private var textView: TextView? = null
     private val loginActivityViewModel: LoginActivityViewModel by viewModels()
