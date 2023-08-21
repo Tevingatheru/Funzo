@@ -6,7 +6,7 @@ import java.util.*
 object SubjectConstants {
     fun getSubjects() : ArrayList<Subject> {
         val topics = ArrayList<Subject>()
-        topics.add(Subject(1, "Test", "General"))
+        topics.add(Subject(id = 1, name = "Test", category = "General"))
         return topics
     }
 }
