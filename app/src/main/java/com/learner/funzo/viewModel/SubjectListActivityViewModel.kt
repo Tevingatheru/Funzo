@@ -15,7 +15,8 @@ class SubjectListActivityViewModel: ViewModel()
 {
     fun getSubjectsView(): List<SubjectDto> {
         return runBlocking {
-            SubjectClientImpl(BackendClientGenerator.createClient(SubjectClient::class.java)).getAll()
+            SubjectClientImpl(BackendClientGenerator.createClient(SubjectClient::class.java))
+                .getAll()
         }
     }
 

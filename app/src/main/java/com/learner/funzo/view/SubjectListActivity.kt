@@ -18,7 +18,7 @@ class SubjectListActivity : AppCompatActivity() {
     private lateinit var listView: ListView
 
     companion object {
-        const val TAG = "SubjectListActivity"
+        private const val TAG = "SubjectListActivity"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +35,6 @@ class SubjectListActivity : AppCompatActivity() {
         super.onResume()
         Log.i(TAG, "onResume")
     }
-
 
     override fun onPause() {
         super.onPause()
