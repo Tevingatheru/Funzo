@@ -3,6 +3,11 @@ package com.learner.funzo.util
 import android.content.Context
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.learner.funzo.model.retrofit.BackendClientGenerator
+import com.learner.funzo.model.retrofit.UserClient
+import com.learner.funzo.model.retrofit.UserClientImpl
+import com.learner.funzo.model.retrofit.request.CreateUserRequest
+import kotlinx.coroutines.runBlocking
 import com.learner.funzo.viewModel.nav.NavigationHandler
 
 class FirebaseUtil {
@@ -26,6 +31,12 @@ class FirebaseUtil {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        val userClientImpl: UserClientImpl = UserClientImpl(BackendClientGenerator
+                            .createClient(UserClient::class.java))
+                        runBlocking {
+                            userClientImpl.createUser(CreateUserRequest(email = email))
+                        }
+
                         Toast.makeText(
                             applicationContext, "Account created.",
                             Toast.LENGTH_SHORT

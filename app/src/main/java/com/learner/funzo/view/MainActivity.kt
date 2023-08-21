@@ -2,6 +2,7 @@ package com.learner.funzo.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -13,6 +14,36 @@ import com.learner.funzo.viewModel.MainActivityViewModel
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainActivityViewModel
+
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.i(TAG, "onRestart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i(TAG, "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i(TAG, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i(TAG, "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG, "onDestroy")
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

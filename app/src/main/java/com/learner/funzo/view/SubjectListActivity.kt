@@ -1,6 +1,7 @@
 package com.learner.funzo.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
@@ -15,10 +16,39 @@ import com.learner.funzo.viewModel.SubjectListActivityViewModel
 class SubjectListActivity : AppCompatActivity() {
     private val viewModel: SubjectListActivityViewModel by viewModels()
     private lateinit var listView: ListView
+
+    companion object {
+        private const val TAG = "SubjectListActivity"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subject_list)
         setSubjectListView()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.i(TAG, "onRestart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i(TAG, "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i(TAG, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i(TAG, "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG, "onDestroy")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
