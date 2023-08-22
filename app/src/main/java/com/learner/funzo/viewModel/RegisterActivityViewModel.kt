@@ -9,7 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.google.android.material.textfield.TextInputEditText
-import com.learner.funzo.model.retrofit.BackendClientGenerator
+import com.learner.funzo.model.retrofit.ClientGenerator
 import com.learner.funzo.model.retrofit.UserClient
 import com.learner.funzo.model.retrofit.UserClientRepository
 import com.learner.funzo.model.retrofit.request.CreateUserRequest
@@ -61,7 +61,7 @@ class RegisterActivityViewModel: ViewModel(), OnClickListener {
                         FirebaseUtil.register(applicationContext!!, email, password)
                         runBlocking {
                             val userClientRepository: UserClientRepository = UserClientRepository(
-                                BackendClientGenerator
+                                ClientGenerator
                                 .createClient(UserClient::class.java))
                             userClientRepository.createUser(CreateUserRequest(email = email))
                         }

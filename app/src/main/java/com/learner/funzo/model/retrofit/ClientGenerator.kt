@@ -7,8 +7,15 @@ import java.lang.Exception
 import java.lang.RuntimeException
 import java.util.concurrent.TimeUnit
 
-object BackendClientGenerator {
+/**
+ * A utility class for generating Retrofit clients.
+ */
+object ClientGenerator {
 
+    /**
+     * The Retrofit instance configured with a base URL, Gson converter factory,
+     * and OkHttpClient with custom timeouts.
+     */
     private val retrofit = Retrofit.Builder()
         .baseUrl("http://10.0.2.2:8080/")
         .addConverterFactory(GsonConverterFactory.create())
@@ -19,12 +26,19 @@ object BackendClientGenerator {
             .build())
         .build()
 
+    /**
+     * Creates a Retrofit client for the specified service interface.
+     *
+     * @param serviceClass The class of the service interface.
+     * @return An instance of the Retrofit service interface.
+     * @throws RuntimeException if there is an error creating the Retrofit client.
+     */
     @JvmStatic
-    fun <S> createClient(serviceClass: Class<S>?): S {
+    fun <S> createClient(serviceClass: Class<S>): S {
         return try{
             retrofit.create(serviceClass)
         } catch (e: Exception) {
-            throw RuntimeException("Unable to create retro client. className: ${serviceClass!!.name}")
+            throw RuntimeException("Unable to create retro client. className: ${serviceClass.name}")
         }
     }
 }
