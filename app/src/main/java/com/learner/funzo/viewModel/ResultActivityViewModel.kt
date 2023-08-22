@@ -1,7 +1,6 @@
 package com.learner.funzo.viewModel
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Button
