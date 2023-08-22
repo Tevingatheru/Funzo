@@ -11,44 +11,59 @@ import com.learner.funzo.view.SubjectListActivity
 import com.learner.funzo.viewModel.constant.ExamConstants
 import com.learner.funzo.viewModel.constant.QuestionConstants
 import com.learner.funzo.viewModel.constant.ScoreConstants
+import kotlinx.coroutines.runBlocking
 
 object NavigationHandler {
     fun navigateToSubjectList(applicationContext: Context) {
-        val intent = Intent(applicationContext, SubjectListActivity::class.java)
-        applicationContext.startActivity(intent)
+        runBlocking {
+            val intent = Intent(applicationContext, SubjectListActivity::class.java)
+            applicationContext.startActivity(intent)
+        }
     }
 
     fun navigateToQuizActivity(applicationContext: Context, questionSize: String) {
-        val intent = Intent(applicationContext, QuizActivity::class.java)
-        intent.putExtra(QuizActivity.examKey, ExamConstants.getExam())
-        intent.putExtra(QuestionConstants.TOTAL_QUESTIONS, questionSize)
+        runBlocking {
+            val intent = Intent(applicationContext, QuizActivity::class.java)
+            intent.putExtra(QuizActivity.examKey, ExamConstants.getExam())
+            intent.putExtra(QuestionConstants.TOTAL_QUESTIONS, questionSize)
 
-        applicationContext.startActivity(intent)
+            applicationContext.startActivity(intent)
+        }
     }
 
     fun navigateToSubjectListActivity(applicationContext: Context) {
-        val intent = Intent(applicationContext, SubjectListActivity::class.java)
-        applicationContext.startActivity(intent)
+        runBlocking {
+            val intent = Intent(applicationContext, SubjectListActivity::class.java)
+            applicationContext.startActivity(intent)
+        }
     }
 
     fun navigateToResultActivity(applicationContext: Context, score: ScoreConstants) {
-        val intent = Intent(applicationContext, ResultActivity::class.java)
-        intent.putExtra("score", score)
-        applicationContext.startActivity(intent)
+        runBlocking {
+            val intent = Intent(applicationContext, ResultActivity::class.java)
+            intent.putExtra("score", score)
+            applicationContext.startActivity(intent)
+        }
     }
 
     fun navigateToRegistrationActivity(applicationContext: Context) {
-        val intent = Intent(applicationContext, RegisterActivity::class.java)
-        applicationContext.startActivity(intent)
+        runBlocking {
+            val intent = Intent(applicationContext, RegisterActivity::class.java)
+            applicationContext.startActivity(intent)
+        }
     }
 
     fun navigateToLoginActivity(applicationContext: Context) {
-        val intent = Intent(applicationContext, LoginActivity::class.java)
-        applicationContext.startActivity(intent)
+        runBlocking {
+            val intent = Intent(applicationContext, LoginActivity::class.java)
+            applicationContext.startActivity(intent)
+        }
     }
 
     fun navigateToMainActivity(applicationContext: Context) {
-        val intent = Intent(applicationContext, MainActivity::class.java)
-        applicationContext.startActivity(intent)
+        runBlocking {
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            applicationContext.startActivity(intent)
+        }
     }
 }

@@ -6,14 +6,14 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import androidx.activity.viewModels
 import com.learner.funzo.util.FirebaseUtil
-import androidx.lifecycle.ViewModelProvider
 import com.learner.funzo.R
 import com.learner.funzo.viewModel.MainActivityViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainActivityViewModel
+    private val viewModel: MainActivityViewModel by viewModels()
 
     companion object {
         private const val TAG = "MainActivity"
@@ -48,8 +48,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
 
         findViewById<Button>(R.id.playBtn).setOnClickListener {
             viewModel.onPlayButtonClicked(this)
