@@ -14,7 +14,8 @@ import com.learner.funzo.R
 import com.learner.funzo.model.Exam
 import com.learner.funzo.model.Options
 import com.learner.funzo.model.Question
-import com.learner.funzo.view.QuizActivity
+import com.learner.funzo.view.activity.ExamActivity
+
 import com.learner.funzo.viewModel.constant.ScoreConstants
 import com.learner.funzo.viewModel.nav.NavigationHandler
 
@@ -30,8 +31,8 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     private lateinit var  progressText: TextView
     private lateinit var  progressBar: ProgressBar
     private lateinit var  questionTextView: TextView
-    private lateinit var  quizActivity: QuizActivity
 
+    private lateinit var  examActivity: ExamActivity
     val mcqOptionA = R.id.tvOptionA
     val mcqOptionB = R.id.tvOptionB
     val mcqOptionC = R.id.tvOptionC
@@ -91,7 +92,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     }
 
 
-    private fun turnRed(selectedOption: String?, applicationContext: QuizActivity) {
+    private fun turnRed(selectedOption: String?, applicationContext: ExamActivity) {
 
         val optionATextView = applicationContext.findViewById<TextView>(mcqOptionA)
 
@@ -105,42 +106,42 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
             "A" -> {
                 optionATextView.background = ContextCompat
                     .getDrawable(applicationContext,
-                    R.drawable.wrong_option_text_background
-                )
+                        R.drawable.wrong_option_text_background
+                    )
             }
             "B" -> {
                 optionBTextView.background = ContextCompat
                     .getDrawable(applicationContext,
-                    R.drawable.wrong_option_text_background
-                )
+                        R.drawable.wrong_option_text_background
+                    )
             }
             "C" -> {
                 optionCTextView.background = ContextCompat
                     .getDrawable(applicationContext,
-                    R.drawable.wrong_option_text_background
-                )
+                        R.drawable.wrong_option_text_background
+                    )
             }
             "D" -> {
                 optionDTextView.background = ContextCompat
                     .getDrawable(applicationContext,
-                    R.drawable.wrong_option_text_background
-                )
+                        R.drawable.wrong_option_text_background
+                    )
             }
         }
     }
 
     private fun defaultOptionsView() {
         val options = ArrayList<TextView>()
-        options.add(quizActivity.findViewById(mcqOptionA))
-        options.add(quizActivity.findViewById(mcqOptionB))
-        options.add(quizActivity.findViewById(mcqOptionC))
-        options.add(quizActivity.findViewById(mcqOptionD))
+        options.add(examActivity.findViewById(mcqOptionA))
+        options.add(examActivity.findViewById(mcqOptionB))
+        options.add(examActivity.findViewById(mcqOptionC))
+        options.add(examActivity.findViewById(mcqOptionD))
 
         for (option in options) {
             option.setTextColor(Color.parseColor("#7A8089"))
             option.typeface = Typeface.DEFAULT
             option.background = ContextCompat.getDrawable(
-                quizActivity,
+                examActivity,
                 R.drawable.default_text_background
             )
         }
@@ -196,19 +197,19 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         if (view != null) {
             when(view.id) {
                 mcqOptionA -> {
-                    selectedOptionView(option = quizActivity.findViewById(mcqOptionA), selectedOption = "A")
+                    selectedOptionView(option = examActivity.findViewById(mcqOptionA), selectedOption = "A")
                 }
 
                 mcqOptionB -> {
-                    selectedOptionView(option = quizActivity.findViewById(mcqOptionB), selectedOption = "B")
+                    selectedOptionView(option = examActivity.findViewById(mcqOptionB), selectedOption = "B")
                 }
 
                 mcqOptionC -> {
-                    selectedOptionView(option = quizActivity.findViewById(mcqOptionC), selectedOption = "C")
+                    selectedOptionView(option = examActivity.findViewById(mcqOptionC), selectedOption = "C")
                 }
 
                 mcqOptionD -> {
-                    selectedOptionView(option = quizActivity.findViewById(mcqOptionD), selectedOption = "D")
+                    selectedOptionView(option = examActivity.findViewById(mcqOptionD), selectedOption = "D")
                 }
 
                 R.id.submitBtn -> {
@@ -236,7 +237,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
 
     private fun noAnswerSelectedProcess() {
         Toast.makeText(
-            quizActivity,
+            examActivity,
             "You must select an answer",
             Toast.LENGTH_SHORT
         ).show()
@@ -244,11 +245,11 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
 
     private fun completeExamProcess() {
         Toast.makeText(
-            quizActivity,
+            examActivity,
             "You have completed the quiz",
             Toast.LENGTH_SHORT
         ).show()
-        this.navigateToResultActivity(applicationContext = quizActivity)
+        this.navigateToResultActivity(applicationContext = examActivity)
     }
 
     private fun incompleteExamProcess() {
@@ -280,23 +281,23 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     private fun showCorrectOption (answer: String) {
         when(answer) {
             Options.A.toString() -> {
-                quizActivity.findViewById<TextView>(mcqOptionA).background = ContextCompat.getDrawable(
-                    quizActivity, R.drawable.correct_option_text_background
+                examActivity.findViewById<TextView>(mcqOptionA).background = ContextCompat.getDrawable(
+                    examActivity, R.drawable.correct_option_text_background
                 )
             }
             Options.B.toString() -> {
-                quizActivity.findViewById<TextView>(mcqOptionB).background = ContextCompat.getDrawable(
-                    quizActivity, R.drawable.correct_option_text_background
+                examActivity.findViewById<TextView>(mcqOptionB).background = ContextCompat.getDrawable(
+                    examActivity, R.drawable.correct_option_text_background
                 )
             }
             Options.C.toString() -> {
-                quizActivity.findViewById<TextView>(mcqOptionC).background = ContextCompat.getDrawable(
-                    quizActivity, R.drawable.correct_option_text_background
+                examActivity.findViewById<TextView>(mcqOptionC).background = ContextCompat.getDrawable(
+                    examActivity, R.drawable.correct_option_text_background
                 )
             }
             Options.D.toString() -> {
-                quizActivity.findViewById<TextView>(mcqOptionD).background = ContextCompat.getDrawable(
-                    quizActivity, R.drawable.correct_option_text_background
+                examActivity.findViewById<TextView>(mcqOptionD).background = ContextCompat.getDrawable(
+                    examActivity, R.drawable.correct_option_text_background
                 )
             }
         }
@@ -313,7 +314,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     }
 
     private fun correctAnswerView(selectedOption: String?) {
-        this.turnRed(selectedOption = selectedOption, applicationContext = quizActivity)
+        this.turnRed(selectedOption = selectedOption, applicationContext = examActivity)
     }
 
     private fun validateInput(
@@ -330,8 +331,8 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
 
     private fun isExamComplete() = this.getCurrentPosition() >= this.getTotalNoOfQuestions()
 
-    fun setExamActivity(quizActivity: QuizActivity) {
-        this.quizActivity = quizActivity
+    fun setExamActivity(examActivity: ExamActivity) {
+        this.examActivity = examActivity
     }
 
     private fun selectedOptionView(option: TextView, selectedOption: String) {
@@ -343,7 +344,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     private fun setSelectedOptionView(option: TextView) {
         option.typeface = Typeface.DEFAULT_BOLD
         option.setTextColor(Color.parseColor("#000000"))
-        option.background = ContextCompat.getDrawable(quizActivity,
+        option.background = ContextCompat.getDrawable(examActivity,
             R.drawable.selected_option_text_background
         )
     }

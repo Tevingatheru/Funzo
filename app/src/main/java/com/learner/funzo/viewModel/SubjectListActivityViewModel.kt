@@ -29,7 +29,7 @@ class SubjectListActivityViewModel: ViewModel()
     }
 
     private fun navigateToQuizActivity(applicationContext: Context, exam: Exam) {
-        NavigationHandler.navigateToQuizActivity(
+        NavigationHandler.navigateToExamActivity(
             applicationContext = applicationContext,
             questionSize = exam.questions.size.toString()
         )

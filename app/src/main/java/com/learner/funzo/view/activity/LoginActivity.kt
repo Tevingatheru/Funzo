@@ -1,4 +1,4 @@
-package com.learner.funzo.view
+package com.learner.funzo.view.activity
 
 import android.os.Bundle
 import android.text.TextUtils

@@ -12,7 +12,8 @@ data class Question(
     val optionB: String?,
     val optionC: String?,
     val optionD: String?,
-    val correctOption: Options?,
+    val correctOption: String?,
+    val questionType: QuestionType
 
     ) : Parcelable {
 

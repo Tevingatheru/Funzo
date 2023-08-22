@@ -1,4 +1,4 @@
-package com.learner.funzo.view
+package com.learner.funzo.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

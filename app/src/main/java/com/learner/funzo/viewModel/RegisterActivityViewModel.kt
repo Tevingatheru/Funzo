@@ -14,7 +14,7 @@ import com.learner.funzo.model.retrofit.UserClient
 import com.learner.funzo.model.retrofit.UserClientImpl
 import com.learner.funzo.model.retrofit.request.CreateUserRequest
 import com.learner.funzo.util.FirebaseUtil
-import com.learner.funzo.view.RegisterActivity
+import com.learner.funzo.view.activity.RegisterActivity
 import com.learner.funzo.viewModel.nav.NavigationHandler
 import kotlinx.coroutines.runBlocking
 

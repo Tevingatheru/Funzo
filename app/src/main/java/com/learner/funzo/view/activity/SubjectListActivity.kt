@@ -1,22 +1,27 @@
-package com.learner.funzo.view
+package com.learner.funzo.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import androidx.activity.viewModels
+import android.widget.ListView
 import com.learner.funzo.util.FirebaseUtil
+import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
 import com.learner.funzo.R
-import com.learner.funzo.viewModel.MainActivityViewModel
+import com.learner.funzo.viewModel.SubjectListActivityViewModel
+import java.lang.Exception
 
-class MainActivity : AppCompatActivity() {
-
-    private val viewModel: MainActivityViewModel by viewModels()
+class SubjectListActivity : AppCompatActivity() {
+    private val viewModel: SubjectListActivityViewModel by viewModels()
 
     companion object {
-        private const val TAG = "MainActivity"
+        private const val TAG = "SubjectListActivity"
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_subject_list)
+        setSubjectListView()
     }
 
     override fun onRestart() {
@@ -25,8 +30,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        super.onResume()
-        Log.i(TAG, "onResume")
+        try {
+            super.onResume()
+            Log.i(TAG, "onResume")
+        } catch (e: Exception) {
+            Log.w(TAG, "Logged error")
+        }
     }
 
     override fun onPause() {
@@ -44,16 +53,6 @@ class MainActivity : AppCompatActivity() {
         Log.i(TAG, "onDestroy")
     }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        findViewById<Button>(R.id.playBtn).setOnClickListener {
-            viewModel.onPlayButtonClicked(this)
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.example_menu, menu)
         return true
@@ -67,5 +66,12 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun setSubjectListView() {
+        viewModel.setSubjectListView(
+            applicationContext = this,
+            subjectListView = findViewById<ListView>(R.id.listView)
+        )
     }
 }

@@ -1,26 +1,22 @@
-package com.learner.funzo.view
+package com.learner.funzo.view.activity
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ListView
-import com.learner.funzo.util.FirebaseUtil
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Button
 import androidx.activity.viewModels
+import com.learner.funzo.util.FirebaseUtil
 import com.learner.funzo.R
-import com.learner.funzo.viewModel.SubjectListActivityViewModel
+import com.learner.funzo.viewModel.MainActivityViewModel
 
-class SubjectListActivity : AppCompatActivity() {
-    private val viewModel: SubjectListActivityViewModel by viewModels()
+class MainActivity : AppCompatActivity() {
+
+    private val viewModel: MainActivityViewModel by viewModels()
 
     companion object {
-        private const val TAG = "SubjectListActivity"
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_subject_list)
-        setSubjectListView()
+        private const val TAG = "MainActivity"
     }
 
     override fun onRestart() {
@@ -48,6 +44,16 @@ class SubjectListActivity : AppCompatActivity() {
         Log.i(TAG, "onDestroy")
     }
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        findViewById<Button>(R.id.playBtn).setOnClickListener {
+            viewModel.onPlayButtonClicked(this)
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.example_menu, menu)
         return true
@@ -61,12 +67,5 @@ class SubjectListActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun setSubjectListView() {
-        viewModel.setSubjectListView(
-            applicationContext = this,
-            subjectListView = findViewById<ListView>(R.id.listView)
-        )
     }
 }
