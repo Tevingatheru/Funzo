@@ -3,9 +3,11 @@ package com.learner.funzo.viewModel
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -34,8 +36,14 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     private var tvProgress: TextView? = null
     private var pbProgressBar: ProgressBar? = null
     private var tvQuestion: TextView? = null
-    private var  examActivity: ExamActivity? = null
+    private var examActivity: ExamActivity? = null
+    private var rbTrueOption: RadioButton? = null
+    private var rbFalseOption: RadioButton? = null
 
+    val rIdTrueFalseQuestionTextView = R.id.trueFalseQuestionTextView
+    val rIdTrueFalseRadioButtonTrue = R.id.trueFalseRadioButtonTrue
+    val rIdTrueFalseRadioButtonFalse = R.id.trueFalseRadioButtonFalse
+    val rIdTrueFalseSubmitBtn = R.id.trueFalseSubmitBtn
     val rIdMcqOptionA = R.id.mcqOptionA
     val rIdMcqOptionB = R.id.mcqOptionB
     val rIdMcqOptionC = R.id.mcqOptionC
@@ -47,6 +55,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         const val FINISH = "Finish"
         const val NEXT = "Next"
         const val SUBMIT = "Submit"
+        private const val TAG = "QuizActivityViewModel"
     }
 
     private var exam: Exam? = null
@@ -64,15 +73,15 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         this.examActivity = null
     }
 
-    fun navigateToResultActivity(applicationContext: Context) {
+    private fun navigateToResultActivity(applicationContext: Context) {
         NavigationHandler.navigateToResultActivity(applicationContext, score)
     }
 
-    fun getCurrentPosition(): Int {
+    private fun getCurrentPosition(): Int {
         return currentPosition
     }
 
-    fun nextPosition() {
+    private fun nextPosition() {
         ++currentPosition
     }
 
@@ -80,7 +89,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         this.exam = exam
     }
 
-    fun getQuestions(): List<Question> {
+    private fun getQuestions(): List<Question> {
         return exam!!.questions
     }
 
@@ -92,7 +101,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         return exam!!.questions.size
     }
 
-    fun getCurrentQuestionByPosition(): Question {
+    private fun getCurrentQuestionByPosition(): Question {
         return this.getQuestions()[this.currentPosition]
     }
 
@@ -100,41 +109,31 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         return question.correctOption.toString() != selectedOption
     }
 
-
     private fun turnRed(selectedOption: String?, applicationContext: ExamActivity) {
-
-        val optionATextView = applicationContext.findViewById<TextView>(rIdMcqOptionA)
-
-        val optionBTextView = applicationContext.findViewById<TextView>(rIdMcqOptionB)
-
-        val optionCTextView = applicationContext.findViewById<TextView>(rIdMcqOptionC)
-
-        val optionDTextView = applicationContext.findViewById<TextView>(rIdMcqOptionD)
-
         when(selectedOption) {
             "A" -> {
-                optionATextView.background = ContextCompat
+                tvOptionA!!.background = ContextCompat
                     .getDrawable(applicationContext,
-                    R.drawable.wrong_option_text_background
-                )
+                        R.drawable.wrong_option_text_background
+                    )
             }
             "B" -> {
-                optionBTextView.background = ContextCompat
+                tvOptionB!!.background = ContextCompat
                     .getDrawable(applicationContext,
-                    R.drawable.wrong_option_text_background
-                )
+                        R.drawable.wrong_option_text_background
+                    )
             }
             "C" -> {
-                optionCTextView.background = ContextCompat
+                tvOptionC!!.background = ContextCompat
                     .getDrawable(applicationContext,
-                    R.drawable.wrong_option_text_background
-                )
+                        R.drawable.wrong_option_text_background
+                    )
             }
             "D" -> {
-                optionDTextView.background = ContextCompat
+                tvOptionD!!.background = ContextCompat
                     .getDrawable(applicationContext,
-                    R.drawable.wrong_option_text_background
-                )
+                        R.drawable.wrong_option_text_background
+                    )
             }
         }
     }
@@ -183,6 +182,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         this.tvQuestion = examActivity!!.findViewById(R.id.multipleChoiceQuestionText)
         this.pbProgressBar = examActivity!!.findViewById(R.id.multipleChoiceProgressBar)
         this.tvProgress = examActivity!!.findViewById(R.id.multipleChoiceProgressBarText)
+
         tvOptionA!!.setOnClickListener(this)
         tvOptionB!!.setOnClickListener(this)
         tvOptionC!!.setOnClickListener(this)
@@ -192,12 +192,13 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
 
     override fun onClick(view: View?) {
         if (view != null) {
+            Log.d(TAG, "Clicked ${view.id}")
             when(view.id) {
-                rIdMcqOptionA -> {
+                rIdMcqOptionA, rIdTrueFalseRadioButtonTrue -> {
                     selectedOptionView(option = examActivity!!.findViewById(rIdMcqOptionA), selectedOption = "A")
                 }
 
-                rIdMcqOptionB -> {
+                rIdMcqOptionB, rIdTrueFalseRadioButtonFalse -> {
                     selectedOptionView(option = examActivity!!.findViewById(rIdMcqOptionB), selectedOption = "B")
                 }
 
@@ -223,6 +224,12 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
                     {
                         noAnswerSelectedProcess()
                     }
+                }
+
+                rIdTrueFalseSubmitBtn -> {
+                    // check is answer is correct
+                    // show correct answer
+                    // change button text to finish
                 }
             }
         }
@@ -250,19 +257,11 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     }
 
     private fun incompleteExamProcess() {
-        if (btnSubmit!!.text == FINISH) {
-            when {
-                this.getCurrentPosition() < this.getTotalNoOfQuestions() -> {
-                    setMCQuestion(question = this.getCurrentQuestionByPosition())
-                }
-            }
-        } else {
-            validateAnswer(this.selectedOption)
-            showCorrectOption(correctOption!!)
-            setSubmitButtonText(btnSubmit!!)
-            this.selectedOption = null
-            this.nextPosition()
-        }
+        validateAnswer(this.selectedOption)
+        showCorrectOption(correctOption!!)
+        setSubmitButtonText(btnSubmit!!)
+        this.selectedOption = null
+        this.nextPosition()
     }
 
     private fun setSubmitButtonText(submitButton: Button) {
@@ -320,8 +319,6 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     private fun setMCQuestion(question: Question) {
         this.setOptionsToDefaultView()
         this.setTextView(question)
-        this.correctOption = question.correctOption.toString()
-        this.setProgressBar()
     }
 
     private fun isExamComplete() = this.getCurrentPosition() >= this.getTotalNoOfQuestions()
@@ -348,18 +345,18 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         val question: Question = this.getCurrentQuestionByPosition()
 
         when (question.questionType) {
-            //            QuestionType.TRUE_FALSE -> {
-            //                setTFQuestion(question)
-            //            }
+            QuestionType.TRUE_FALSE -> {
+                applicationContext.setContentView(R.layout.fragment_true_false)
+
+                navigateFragment(applicationContext, R.id.trueFalseFragment)
+                this.initTFQuestion()
+                this.setTFQuestion(question)
+            }
             QuestionType.MULTIPLE_CHOICE -> {
                 applicationContext.setContentView(R.layout.fragment_multiple_choice)
-                val navHostFragment = applicationContext.supportFragmentManager
-                    .findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+                navigateFragment(applicationContext, R.id.multipleChoiceFragment)
 
-                navController = navHostFragment.navController
-                navController.navigate(resId = R.id.multipleChoiceFragment)
-
-                initMCQQuestion()
+                this.initMCQQuestion()
                 this.setMCQuestion(question)
             }
             //            QuestionType.OPEN_ENDED -> {
@@ -370,6 +367,30 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
                     .show()
             }
         }
+        this.correctOption = question.correctOption.toString()
+        this.setProgressBar()
     }
 
+    private fun navigateFragment(applicationContext: ExamActivity, resId: Int) {
+        val navHostFragment = applicationContext.supportFragmentManager
+            .findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+
+        navController = navHostFragment.navController
+        navController.navigate(resId = resId)
+    }
+
+    private fun setTFQuestion(question: Question) {
+        this.tvQuestion!!.text = question.question
+        this.rbTrueOption!!.text = "True"
+        this.rbFalseOption!!.text = "False"
+    }
+
+    private fun initTFQuestion() {
+        this.tvQuestion = examActivity!!.findViewById<TextView>(rIdTrueFalseQuestionTextView)
+        this.rbTrueOption = examActivity!!.findViewById<RadioButton>(rIdTrueFalseRadioButtonTrue)
+        this.rbFalseOption = examActivity!!.findViewById<RadioButton>(rIdTrueFalseRadioButtonFalse)
+        this.btnSubmit = examActivity!!.findViewById(rIdTrueFalseSubmitBtn)
+        this.pbProgressBar = examActivity!!.findViewById(R.id.trueFalseProgressBar)
+        this.tvProgress = examActivity!!.findViewById(R.id.trueFalseProgressBarText)
+    }
 }
