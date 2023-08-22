@@ -27,7 +27,6 @@ import com.learner.funzo.viewModel.nav.NavigationHandler
 
 class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     private var currentPosition:Int = 0
-    private val score : ScoreConstants = ScoreConstants
     private lateinit var questionType: QuestionType
 
     private var tvOptionB: TextView? = null
@@ -80,7 +79,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     }
 
     private fun navigateToResultActivity(applicationContext: Context) {
-        NavigationHandler.navigateToResultActivity(applicationContext, score)
+        NavigationHandler.navigateToResultActivity(applicationContext)
     }
 
     private fun getCurrentPosition(): Int {

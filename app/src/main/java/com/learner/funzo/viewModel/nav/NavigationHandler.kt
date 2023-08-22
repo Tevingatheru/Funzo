@@ -27,10 +27,9 @@ object NavigationHandler {
         }
     }
 
-    fun navigateToResultActivity(applicationContext: Context, score: ScoreConstants) {
+    fun navigateToResultActivity(applicationContext: Context) {
         runBlocking {
             val intent = Intent(applicationContext, ResultActivity::class.java)
-            intent.putExtra("score", score)
             applicationContext.startActivity(intent)
         }
     }
