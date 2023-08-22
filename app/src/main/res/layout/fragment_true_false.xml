@@ -10,8 +10,10 @@
         android:id="@+id/trueFalseLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/standard_margin"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:gravity="center"
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/trueFalseQuestionTextView"
@@ -19,21 +21,27 @@
             android:layout_height="wrap_content"
             android:text="@string/defaultQuestion"
             android:textSize="18sp" />
+
         <ImageView
             android:id="@+id/trueFalseImage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:layout_height="100sp"
+            android:layout_margin="@dimen/standard_margin"
             android:gravity="center"
+            android:maxWidth="150sp"
+            android:maxHeight="150sp"
+            android:minWidth="50sp"
+            android:minHeight="50sp"
             android:padding="10dp"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            />
 
         <LinearLayout
             android:id="@+id/trueFalseProgressBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <ProgressBar
@@ -78,10 +86,14 @@
                 android:text="False"
                 android:checked="false" />
         </RadioGroup>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="30sp"/>
 
         <Button
             android:id="@+id/trueFalseSubmitBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:text="@string/submit" />
