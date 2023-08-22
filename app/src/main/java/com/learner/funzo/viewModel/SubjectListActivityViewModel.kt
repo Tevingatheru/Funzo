@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.learner.funzo.model.Exam
 import com.learner.funzo.model.retrofit.BackendClientGenerator
 import com.learner.funzo.model.retrofit.SubjectClient
-import com.learner.funzo.model.retrofit.SubjectClientImpl
+import com.learner.funzo.model.retrofit.SubjectClientRepository
 import com.learner.funzo.model.retrofit.dto.SubjectDto
 import com.learner.funzo.viewModel.constant.ExamConstants
 import com.learner.funzo.viewModel.nav.NavigationHandler
@@ -19,7 +19,7 @@ class SubjectListActivityViewModel: ViewModel()
 
     private fun getSubjectsView(): List<SubjectDto> {
         return runBlocking {
-            SubjectClientImpl(BackendClientGenerator.createClient(SubjectClient::class.java))
+            SubjectClientRepository(BackendClientGenerator.createClient(SubjectClient::class.java))
                 .getAll()
         }
     }

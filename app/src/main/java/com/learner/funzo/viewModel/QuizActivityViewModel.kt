@@ -22,15 +22,15 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     private var currentPosition:Int = 0
     private val score : ScoreConstants = ScoreConstants
 
-    private lateinit var optionB: TextView
-    private lateinit var optionC: TextView
-    private lateinit var optionD: TextView
-    private lateinit var submitButton: Button
-    private var optionA: TextView? = null
-    private lateinit var  progressText: TextView
-    private lateinit var  progressBar: ProgressBar
-    private lateinit var  questionTextView: TextView
-    private lateinit var  quizActivity: QuizActivity
+    private var tvOptionB: TextView? = null
+    private var tvOptionC: TextView? = null
+    private var tvOptionD: TextView? = null
+    private var btnSubmit: Button? = null
+    private var tvOptionA: TextView? = null
+    private var tvProgress: TextView? = null
+    private var pbProgressBar: ProgressBar? = null
+    private var tvQuestion: TextView? = null
+    private var quizActivity: QuizActivity? = null
 
     val mcqOptionA = R.id.tvOptionA
     val mcqOptionB = R.id.tvOptionB
@@ -45,6 +45,17 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     private var exam: Exam? = null
     var selectedOption: String? = null
     private var correctOption: String? = null
+
+    fun onDestroy() {
+        tvOptionA = null
+        tvOptionB = null
+        tvOptionC = null
+        tvOptionD = null
+        this.tvProgress = null
+        this.pbProgressBar = null
+        this.tvQuestion = null
+        this.quizActivity = null
+    }
 
     fun navigateToResultActivity(applicationContext: Context) {
         NavigationHandler.navigateToResultActivity(applicationContext, score)
@@ -74,16 +85,8 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         return exam!!.questions.size
     }
 
-    private fun setCorrectOption(correctOption: String) {
-        this.correctOption = correctOption
-    }
-
     fun getCurrentQuestionByPosition(): Question {
         return this.getQuestions()[this.currentPosition]
-    }
-
-    private fun getCorrectOption(): String? {
-        return this.correctOption
     }
 
     private fun isInputCorrect(question: Question, selectedOption: String?): Boolean {
@@ -129,38 +132,39 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         }
     }
 
-    private fun defaultOptionsView() {
+    private fun setOptionsToDefaultView() {
         val options = ArrayList<TextView>()
-        options.add(quizActivity.findViewById(mcqOptionA))
-        options.add(quizActivity.findViewById(mcqOptionB))
-        options.add(quizActivity.findViewById(mcqOptionC))
-        options.add(quizActivity.findViewById(mcqOptionD))
+
+        options.add(quizActivity!!.findViewById(mcqOptionA))
+        options.add(quizActivity!!.findViewById(mcqOptionB))
+        options.add(quizActivity!!.findViewById(mcqOptionC))
+        options.add(quizActivity!!.findViewById(mcqOptionD))
 
         for (option in options) {
             option.setTextColor(Color.parseColor("#7A8089"))
             option.typeface = Typeface.DEFAULT
             option.background = ContextCompat.getDrawable(
-                quizActivity,
+                quizActivity!!,
                 R.drawable.default_text_background
             )
         }
     }
 
-    private fun setView(
-        question: Question?
+    private fun setTextView(
+        question: Question
     ) {
-        this.questionTextView.text = question!!.question
-        this.optionA!!.text = question.optionA
-        this.optionB.text = question.optionB
-        this.optionC.text = question.optionC
-        this.optionD.text = question.optionD
+        this.tvQuestion!!.text = question.question
+        this.tvOptionA!!.text = question.optionA
+        this.tvOptionB!!.text = question.optionB
+        this.tvOptionC!!.text = question.optionC
+        this.tvOptionD!!.text = question.optionD
     }
 
     private fun setProgressBar() {
         val currentPosition = this.getCurrentPosition()
-        progressBar.progress = currentPosition
+        pbProgressBar!!.progress = currentPosition
         val text = "$currentPosition / ${this.getTotalNoOfQuestions()}"
-        progressText.text = text
+        tvProgress!!.text = text
     }
 
     fun initMCQQuestion(
@@ -173,42 +177,42 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         progressBar: ProgressBar,
         progressText: TextView
     ) {
-        this.optionA = optionA
-        this.optionB = optionB
-        this.optionC = optionC
-        this.optionD = optionD
-        this.submitButton = submitButton
-        this.questionTextView = questionTextView
-        this.progressBar = progressBar
-        this.progressText = progressText
+        this.tvOptionA = optionA
+        this.tvOptionB = optionB
+        this.tvOptionC = optionC
+        this.tvOptionD = optionD
+        this.btnSubmit = submitButton
+        this.tvQuestion = questionTextView
+        this.pbProgressBar = progressBar
+        this.tvProgress = progressText
         this.setOnClickListener()
     }
 
     private fun setOnClickListener () {
-        optionA!!.setOnClickListener(this)
-        optionB.setOnClickListener(this)
-        optionC.setOnClickListener(this)
-        optionD.setOnClickListener(this)
-        submitButton.setOnClickListener(this)
+        tvOptionA!!.setOnClickListener(this)
+        tvOptionB!!.setOnClickListener(this)
+        tvOptionC!!.setOnClickListener(this)
+        tvOptionD!!.setOnClickListener(this)
+        btnSubmit!!.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
         if (view != null) {
             when(view.id) {
                 mcqOptionA -> {
-                    selectedOptionView(option = quizActivity.findViewById(mcqOptionA), selectedOption = "A")
+                    selectedOptionView(option = quizActivity!!.findViewById(mcqOptionA), selectedOption = "A")
                 }
 
                 mcqOptionB -> {
-                    selectedOptionView(option = quizActivity.findViewById(mcqOptionB), selectedOption = "B")
+                    selectedOptionView(option = quizActivity!!.findViewById(mcqOptionB), selectedOption = "B")
                 }
 
                 mcqOptionC -> {
-                    selectedOptionView(option = quizActivity.findViewById(mcqOptionC), selectedOption = "C")
+                    selectedOptionView(option = quizActivity!!.findViewById(mcqOptionC), selectedOption = "C")
                 }
 
                 mcqOptionD -> {
-                    selectedOptionView(option = quizActivity.findViewById(mcqOptionD), selectedOption = "D")
+                    selectedOptionView(option = quizActivity!!.findViewById(mcqOptionD), selectedOption = "D")
                 }
 
                 R.id.submitBtn -> {
@@ -231,12 +235,12 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     }
 
     private fun isNextPhase(): Boolean {
-        return submitButton.text == NEXT
+        return btnSubmit!!.text == NEXT
     }
 
     private fun noAnswerSelectedProcess() {
         Toast.makeText(
-            quizActivity,
+            quizActivity!!,
             "You must select an answer",
             Toast.LENGTH_SHORT
         ).show()
@@ -244,15 +248,15 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
 
     private fun completeExamProcess() {
         Toast.makeText(
-            quizActivity,
+            quizActivity!!,
             "You have completed the quiz",
             Toast.LENGTH_SHORT
         ).show()
-        this.navigateToResultActivity(applicationContext = quizActivity)
+        this.navigateToResultActivity(applicationContext = quizActivity!!)
     }
 
     private fun incompleteExamProcess() {
-        if (submitButton.text == FINISH) {
+        if (btnSubmit!!.text == FINISH) {
             when {
                 this.getCurrentPosition() < this.getTotalNoOfQuestions() -> {
                     setMCQuestion(question = this.getCurrentQuestionByPosition())
@@ -260,10 +264,8 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
             }
         } else {
             validateAnswer(this.selectedOption)
-
-            this.getCorrectOption()?.let { showCorrectOption(it) }
-
-            setSubmitButtonText(submitButton)
+            showCorrectOption(correctOption!!)
+            setSubmitButtonText(btnSubmit!!)
             this.selectedOption = null
             this.nextPosition()
         }
@@ -280,23 +282,23 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     private fun showCorrectOption (answer: String) {
         when(answer) {
             Options.A.toString() -> {
-                quizActivity.findViewById<TextView>(mcqOptionA).background = ContextCompat.getDrawable(
-                    quizActivity, R.drawable.correct_option_text_background
+                quizActivity!!.findViewById<TextView>(mcqOptionA).background = ContextCompat.getDrawable(
+                    quizActivity!!, R.drawable.correct_option_text_background
                 )
             }
             Options.B.toString() -> {
-                quizActivity.findViewById<TextView>(mcqOptionB).background = ContextCompat.getDrawable(
-                    quizActivity, R.drawable.correct_option_text_background
+                quizActivity!!.findViewById<TextView>(mcqOptionB).background = ContextCompat.getDrawable(
+                    quizActivity!!, R.drawable.correct_option_text_background
                 )
             }
             Options.C.toString() -> {
-                quizActivity.findViewById<TextView>(mcqOptionC).background = ContextCompat.getDrawable(
-                    quizActivity, R.drawable.correct_option_text_background
+                quizActivity!!.findViewById<TextView>(mcqOptionC).background = ContextCompat.getDrawable(
+                    quizActivity!!, R.drawable.correct_option_text_background
                 )
             }
             Options.D.toString() -> {
-                quizActivity.findViewById<TextView>(mcqOptionD).background = ContextCompat.getDrawable(
-                    quizActivity, R.drawable.correct_option_text_background
+                quizActivity!!.findViewById<TextView>(mcqOptionD).background = ContextCompat.getDrawable(
+                    quizActivity!!, R.drawable.correct_option_text_background
                 )
             }
         }
@@ -313,7 +315,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     }
 
     private fun correctAnswerView(selectedOption: String?) {
-        this.turnRed(selectedOption = selectedOption, applicationContext = quizActivity)
+        this.turnRed(selectedOption = selectedOption, applicationContext = quizActivity!!)
     }
 
     private fun validateInput(
@@ -322,9 +324,9 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     ) = this.isInputCorrect(question = question, selectedOption = selectedOption)
 
     fun setMCQuestion(question: Question) {
-        this.defaultOptionsView()
-        this.setView(question)
-        this.setCorrectOption(question.correctOption.toString())
+        this.setOptionsToDefaultView()
+        this.setTextView(question)
+        this.correctOption = question.correctOption.toString()
         this.setProgressBar()
     }
 
@@ -335,7 +337,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     }
 
     private fun selectedOptionView(option: TextView, selectedOption: String) {
-        this.defaultOptionsView()
+        this.setOptionsToDefaultView()
         this.selectedOption = selectedOption
         this.setSelectedOptionView(option = option)
     }
@@ -343,7 +345,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     private fun setSelectedOptionView(option: TextView) {
         option.typeface = Typeface.DEFAULT_BOLD
         option.setTextColor(Color.parseColor("#000000"))
-        option.background = ContextCompat.getDrawable(quizActivity,
+        option.background = ContextCompat.getDrawable(quizActivity!!,
             R.drawable.selected_option_text_background
         )
     }

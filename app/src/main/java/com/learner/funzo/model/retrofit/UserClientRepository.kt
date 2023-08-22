@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class UserClientImpl (private val userClient: UserClient) {
+class UserClientRepository (private val userClient: UserClient) {
     suspend fun createUser(request: CreateUserRequest): Response<CreateUserResponse> {
 
         return withContext(Dispatchers.IO) {

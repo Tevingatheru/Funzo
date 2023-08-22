@@ -3,11 +3,6 @@ package com.learner.funzo.util
 import android.content.Context
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.learner.funzo.model.retrofit.BackendClientGenerator
-import com.learner.funzo.model.retrofit.UserClient
-import com.learner.funzo.model.retrofit.UserClientImpl
-import com.learner.funzo.model.retrofit.request.CreateUserRequest
-import kotlinx.coroutines.runBlocking
 import com.learner.funzo.viewModel.nav.NavigationHandler
 
 class FirebaseUtil {

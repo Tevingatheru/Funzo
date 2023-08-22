@@ -10,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Response
 import java.net.SocketTimeoutException
 
-class SubjectClientImpl (private val subjectClient: SubjectClient)
+class SubjectClientRepository (private val subjectClient: SubjectClient)
 {
     suspend fun getAll(): List<SubjectDto> {
         return try {
