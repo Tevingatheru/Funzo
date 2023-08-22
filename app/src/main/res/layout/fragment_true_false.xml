@@ -1,57 +1,52 @@
 <!-- res/layout/fragment_true_false.xml -->
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/trueFalseFrameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="com.learner.funzo.viewModel.QuizActivityViewModel" />
-    </data>
-
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/trueFalseLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/trueFalseQuestionTextView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="wrap_content"
+            android:text="@string/defaultQuestion"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/questionTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="question"
-                android:textSize="18sp" />
+        <RadioGroup
+            android:id="@+id/trueFalseRadioOption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
 
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-
-                <RadioButton
-                    android:id="@+id/radioButtonTrue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="True"
-                    android:checked="true" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonFalse"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="False"
-                    android:checked="false" />
-            </RadioGroup>
-
-            <Button
+            <RadioButton
+                android:id="@+id/trueFalseRadioButtonTrue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="Next" />
+                android:text="True"
+                android:checked="true" />
 
-        </LinearLayout>
-    </FrameLayout>
-</layout>
+            <RadioButton
+                android:id="@+id/trueFalseRadioButtonFalse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="False"
+                android:checked="false" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/trueFalseSubmitBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/submit" />
+
+    </LinearLayout>
+</FrameLayout>

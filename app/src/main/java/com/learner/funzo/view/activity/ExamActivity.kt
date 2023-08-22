@@ -47,9 +47,6 @@ class ExamActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exam)
-        setContentView(R.layout.fragment_multiple_choice)
-        setContentView(R.layout.fragment_open_ended_question)
-        setContentView(R.layout.fragment_open_ended_question)
 
         viewModel.setExam(intent.getParcelableExtra(examKey)!!)
         ScoreConstants.resetScore(viewModel.getTotalNoOfQuestions(), viewModel.getThreshold())
@@ -61,6 +58,7 @@ class ExamActivity : AppCompatActivity() {
 //                setTFQuestion(question)
 //            }
             QuestionType.MULTIPLE_CHOICE -> {
+                setContentView(R.layout.fragment_multiple_choice)
                 val navHostFragment = supportFragmentManager
                     .findFragmentById(R.id.fragmentContainerView) as NavHostFragment
 
@@ -81,14 +79,14 @@ class ExamActivity : AppCompatActivity() {
 
 
     private fun initMCQView() {
-        viewModel.initMCQQuestion(optionA = findViewById<TextView>(R.id.mcqOptionA),
-            optionB = findViewById<TextView>(R.id.mcqOptionB),
-            optionC = findViewById<TextView>(R.id.mcqOptionC),
-            optionD = findViewById<TextView>(R.id.mcqOptionD),
+        viewModel.initMCQQuestion(optionA = findViewById<TextView>(viewModel.rIdMcqOptionA),
+            optionB = findViewById<TextView>(viewModel.rIdMcqOptionB),
+            optionC = findViewById<TextView>(viewModel.rIdMcqOptionC),
+            optionD = findViewById<TextView>(viewModel.rIdMcqOptionD),
             submitButton = findViewById<Button>(R.id.mcqSubmitBtn),
-            questionTextView = findViewById<TextView>(R.id.mcqQuestionText),
-            progressBar = findViewById<ProgressBar>(R.id.mcqProgressBar),
-            progressText = findViewById<TextView>(R.id.mcqProgressBarText))
+            questionTextView = findViewById<TextView>(R.id.multipleChoiceQuestionText),
+            progressBar = findViewById<ProgressBar>(R.id.multipleChoiceProgressBar),
+            progressText = findViewById<TextView>(R.id.multipleChoiceProgressBarText))
     }
 
     private fun getCurrentQuestion() = viewModel.getCurrentQuestionByPosition()

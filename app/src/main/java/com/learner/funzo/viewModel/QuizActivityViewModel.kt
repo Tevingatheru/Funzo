@@ -15,7 +15,6 @@ import com.learner.funzo.model.Exam
 import com.learner.funzo.model.Options
 import com.learner.funzo.model.Question
 import com.learner.funzo.view.activity.ExamActivity
-import com.learner.funzo.view.fragment.MultipleChoiceFragment
 
 import com.learner.funzo.viewModel.constant.ScoreConstants
 import com.learner.funzo.viewModel.nav.NavigationHandler
@@ -34,10 +33,10 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     private lateinit var  questionTextView: TextView
 
     private lateinit var  examActivity: ExamActivity
-    val mcqOptionA = R.id.tvOptionA
-    val mcqOptionB = R.id.tvOptionB
-    val mcqOptionC = R.id.tvOptionC
-    val mcqOptionD = R.id.tvOptionD
+    val rIdMcqOptionA = R.id.mcqOptionA
+    val rIdMcqOptionB = R.id.mcqOptionB
+    val rIdMcqOptionC = R.id.mcqOptionC
+    val rIdMcqOptionD = R.id.mcqOptionD
     companion object {
         const val FINISH = "Finish"
         const val NEXT = "Next"
@@ -95,13 +94,13 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
 
     private fun turnRed(selectedOption: String?, applicationContext: ExamActivity) {
 
-        val optionATextView = applicationContext.findViewById<TextView>(mcqOptionA)
+        val optionATextView = applicationContext.findViewById<TextView>(rIdMcqOptionA)
 
-        val optionBTextView = applicationContext.findViewById<TextView>(mcqOptionB)
+        val optionBTextView = applicationContext.findViewById<TextView>(rIdMcqOptionB)
 
-        val optionCTextView = applicationContext.findViewById<TextView>(mcqOptionC)
+        val optionCTextView = applicationContext.findViewById<TextView>(rIdMcqOptionC)
 
-        val optionDTextView = applicationContext.findViewById<TextView>(mcqOptionD)
+        val optionDTextView = applicationContext.findViewById<TextView>(rIdMcqOptionD)
 
         when(selectedOption) {
             "A" -> {
@@ -197,23 +196,23 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     override fun onClick(view: View?) {
         if (view != null) {
             when(view.id) {
-                mcqOptionA -> {
-                    selectedOptionView(option = examActivity.findViewById(mcqOptionA), selectedOption = "A")
+                rIdMcqOptionA -> {
+                    selectedOptionView(option = examActivity.findViewById(rIdMcqOptionA), selectedOption = "A")
                 }
 
-                mcqOptionB -> {
-                    selectedOptionView(option = examActivity.findViewById(mcqOptionB), selectedOption = "B")
+                rIdMcqOptionB -> {
+                    selectedOptionView(option = examActivity.findViewById(rIdMcqOptionB), selectedOption = "B")
                 }
 
-                mcqOptionC -> {
-                    selectedOptionView(option = examActivity.findViewById(mcqOptionC), selectedOption = "C")
+                rIdMcqOptionC -> {
+                    selectedOptionView(option = examActivity.findViewById(rIdMcqOptionC), selectedOption = "C")
                 }
 
-                mcqOptionD -> {
-                    selectedOptionView(option = examActivity.findViewById(mcqOptionD), selectedOption = "D")
+                rIdMcqOptionD -> {
+                    selectedOptionView(option = examActivity.findViewById(rIdMcqOptionD), selectedOption = "D")
                 }
 
-                R.id.submitBtn -> {
+                R.id.mcqSubmitBtn -> {
                     if (isExamComplete()) {
                         completeExamProcess()
                     }
@@ -282,22 +281,22 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     private fun showCorrectOption (answer: String) {
         when(answer) {
             Options.A.toString() -> {
-                examActivity.findViewById<TextView>(mcqOptionA).background = ContextCompat.getDrawable(
+                examActivity.findViewById<TextView>(rIdMcqOptionA).background = ContextCompat.getDrawable(
                     examActivity, R.drawable.correct_option_text_background
                 )
             }
             Options.B.toString() -> {
-                examActivity.findViewById<TextView>(mcqOptionB).background = ContextCompat.getDrawable(
+                examActivity.findViewById<TextView>(rIdMcqOptionB).background = ContextCompat.getDrawable(
                     examActivity, R.drawable.correct_option_text_background
                 )
             }
             Options.C.toString() -> {
-                examActivity.findViewById<TextView>(mcqOptionC).background = ContextCompat.getDrawable(
+                examActivity.findViewById<TextView>(rIdMcqOptionC).background = ContextCompat.getDrawable(
                     examActivity, R.drawable.correct_option_text_background
                 )
             }
             Options.D.toString() -> {
-                examActivity.findViewById<TextView>(mcqOptionD).background = ContextCompat.getDrawable(
+                examActivity.findViewById<TextView>(rIdMcqOptionD).background = ContextCompat.getDrawable(
                     examActivity, R.drawable.correct_option_text_background
                 )
             }
