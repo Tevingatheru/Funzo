@@ -246,7 +246,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
             "You have completed the quiz",
             Toast.LENGTH_SHORT
         ).show()
-        this.navigateToResultActivity(applicationContext = examActivity)
+        this.navigateToResultActivity(applicationContext = examActivity!!)
     }
 
     private fun incompleteExamProcess() {

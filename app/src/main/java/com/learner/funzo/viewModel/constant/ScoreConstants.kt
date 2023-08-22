@@ -1,13 +1,17 @@
 package com.learner.funzo.viewModel.constant
 
 import android.os.Parcelable
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 object ScoreConstants : Parcelable {
+    @IgnoredOnParcel
     private var threshold: Int = 0
+    @IgnoredOnParcel
     private var totalQuestions: Int = 0
 
+    @IgnoredOnParcel
     private var correctlyAnswered: Int = 0
 
     fun addToCorrectResults() {
