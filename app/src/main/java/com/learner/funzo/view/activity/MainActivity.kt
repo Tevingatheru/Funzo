@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import com.learner.funzo.util.FirebaseUtil
 import com.learner.funzo.R
 import com.learner.funzo.viewModel.MainActivityViewModel
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,9 +49,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val mainActivity = this
         findViewById<Button>(R.id.playBtn).setOnClickListener {
-            viewModel.onPlayButtonClicked(this)
+            runBlocking {
+                viewModel.onPlayButtonClicked(applicationContext = mainActivity)
+
+            }
+            finish()
         }
     }
 

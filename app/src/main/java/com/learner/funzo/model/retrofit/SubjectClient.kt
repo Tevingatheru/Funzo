@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface SubjectClient {
     @GET("/subjects")
-    fun getAll(): Call<SubjectListResponse>
+    suspend fun getAll(): Call<SubjectListResponse>
 }

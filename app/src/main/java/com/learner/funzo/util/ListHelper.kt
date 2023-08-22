@@ -1,9 +1,17 @@
-package com.learner.funzo.viewModel
+package com.learner.funzo.util
 
 import android.widget.ListAdapter
 import android.widget.ListView
 
+/**
+ * A utility class for working with ListViews.
+ */
 object ListHelper {
+    /**
+     * Calculates and adjusts the height of a ListView to accommodate its content.
+     *
+     * @param myListView The ListView whose height needs to be adjusted.
+     */
     fun getListViewSize(myListView: ListView) {
         val myListAdapter : ListAdapter = myListView.adapter ?: return
         var totalHeight = 0
