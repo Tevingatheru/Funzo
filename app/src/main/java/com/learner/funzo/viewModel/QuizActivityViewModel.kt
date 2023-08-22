@@ -217,7 +217,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
                         incompleteExamProcess()
                     }
                     else if (isNextPhase()) {
-                        setMCQuestion(getCurrentQuestionByPosition())
+                        this.setQuestion(examActivity!!)
                     }
                     else
                     {
@@ -317,7 +317,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         selectedOption: String?
     ) = this.isInputCorrect(question = question, selectedOption = selectedOption)
 
-    fun setMCQuestion(question: Question) {
+    private fun setMCQuestion(question: Question) {
         this.setOptionsToDefaultView()
         this.setTextView(question)
         this.correctOption = question.correctOption.toString()
