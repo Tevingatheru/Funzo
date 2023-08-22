@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/examination_nav"
+    app:startDestination="@id/multipleChoiceFragment">
+
+    <fragment
+        android:id="@+id/multipleChoiceFragment"
+        android:name="com.learner.funzo.view.fragment.MultipleChoiceFragment"
+        android:label="fragment_multiple_choice"
+        tools:layout="@layout/fragment_multiple_choice" />
+    <fragment
+        android:id="@+id/openEndedQuestionFragment"
+        android:name="com.learner.funzo.view.fragment.OpenEndedQuestionFragment"
+        android:label="fragment_open_ended_question"
+        tools:layout="@layout/fragment_open_ended_question" />
+    <fragment
+        android:id="@+id/trueFalseFragment"
+        android:name="com.learner.funzo.view.fragment.TrueFalseFragment"
+        android:label="TrueFalseFragment" />
+</navigation>

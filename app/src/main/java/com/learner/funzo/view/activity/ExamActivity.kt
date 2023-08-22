@@ -9,15 +9,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.learner.funzo.R
 import com.learner.funzo.model.Question
 import com.learner.funzo.model.QuestionType
 import com.learner.funzo.util.FirebaseUtil
-import com.learner.funzo.view.fragment.MultipleChoiceFragment
 import com.learner.funzo.viewModel.QuizActivityViewModel
 import com.learner.funzo.viewModel.constant.ScoreConstants
 
@@ -25,6 +22,7 @@ import com.learner.funzo.viewModel.constant.ScoreConstants
 class ExamActivity : AppCompatActivity() {
 
     private val viewModel: QuizActivityViewModel by viewModels()
+    private lateinit var navController: NavController
 
     companion object {
         const val examKey = "exam"
@@ -68,11 +66,12 @@ class ExamActivity : AppCompatActivity() {
 //            }
             QuestionType.MULTIPLE_CHOICE -> {
 
-                supportFragmentManager.commit {
-                    replace<MultipleChoiceFragment>(containerViewId = R.id.fragmentContainerView)
 
-                }
+                val navHostFragment = supportFragmentManager
+                    .findFragmentById(R.id.fragmentContainerView) as NavHostFragment
 
+                navController = navHostFragment.navController
+                navController.navigate(R.id.multipleChoiceFragment)
 
 //                initMCQView()
 //                viewModel.setMCQuestion(question)
