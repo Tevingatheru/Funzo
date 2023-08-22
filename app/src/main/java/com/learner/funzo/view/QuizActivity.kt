@@ -54,10 +54,10 @@ class QuizActivity : AppCompatActivity()
     }
 
     private fun initView() {
-        viewModel.initMCQQuestion(optionA = findViewById<TextView>(R.id.tvOptionA),
-        optionB = findViewById<TextView>(R.id.tvOptionB),
-        optionC = findViewById<TextView>(R.id.tvOptionC),
-        optionD = findViewById<TextView>(R.id.tvOptionD),
+        viewModel.initMCQQuestion(optionA = findViewById<TextView>(viewModel.mcqOptionA),
+        optionB = findViewById<TextView>(viewModel.mcqOptionB),
+        optionC = findViewById<TextView>(viewModel.mcqOptionC),
+        optionD = findViewById<TextView>(viewModel.mcqOptionD),
         submitButton = findViewById<Button>(R.id.submitBtn),
         questionTextView = findViewById<TextView>(R.id.questionText),
         progressBar = findViewById<ProgressBar>(R.id.progressBar),

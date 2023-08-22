@@ -74,7 +74,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         return exam!!.questions.size
     }
 
-    fun setCorrectOption(correctOption: String) {
+    private fun setCorrectOption(correctOption: String) {
         this.correctOption = correctOption
     }
 
@@ -82,7 +82,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         return this.getQuestions()[this.currentPosition]
     }
 
-    fun getCorrectOption(): String? {
+    private fun getCorrectOption(): String? {
         return this.correctOption
     }
 

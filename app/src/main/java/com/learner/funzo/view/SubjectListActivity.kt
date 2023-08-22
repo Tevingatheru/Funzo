@@ -4,18 +4,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.learner.funzo.util.FirebaseUtil
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
-import com.learner.funzo.viewModel.ListHelper
 import com.learner.funzo.R
 import com.learner.funzo.viewModel.SubjectListActivityViewModel
 
 class SubjectListActivity : AppCompatActivity() {
     private val viewModel: SubjectListActivityViewModel by viewModels()
-    private lateinit var listView: ListView
 
     companion object {
         private const val TAG = "SubjectListActivity"
@@ -67,17 +64,9 @@ class SubjectListActivity : AppCompatActivity() {
     }
 
     private fun setSubjectListView() {
-        listView = findViewById<ListView>(R.id.listView)
-        val subjectListView = viewModel.getSubjectsView()
-
-        listView.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, subjectListView)
-        ListHelper.getListViewSize(listView)
-
-        listView.setOnItemClickListener { _, _, i, _ ->
-            val selectedSubject = subjectListView.get(i)
-            val exam = viewModel.getExamBySubjectView(selectedSubject)
-
-            viewModel.navigateToQuizActivity(applicationContext = this, exam = exam)
-        }
+        viewModel.setSubjectListView(
+            applicationContext = this,
+            subjectListView = findViewById<ListView>(R.id.listView)
+        )
     }
 }
