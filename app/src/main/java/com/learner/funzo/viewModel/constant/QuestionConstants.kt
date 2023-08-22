@@ -6,10 +6,7 @@ import com.learner.funzo.model.QuestionType
 
 object QuestionConstants {
     const val TOTAL_QUESTIONS: String = "total_questions"
-
-    fun getQuestionsBySubjectName(): ArrayList<Question> {
-        return getQuestions()
-    }
+    val defaultQuestionsArray: ArrayList<Question> = getQuestions()
 
     private fun getQuestions(): ArrayList<Question> {
         val questionsList = ArrayList<Question>()
@@ -46,8 +43,8 @@ object QuestionConstants {
                 image = "",
                 optionA = "Yes",
                 optionB = "No",
-                optionC = "Next page",
-                optionD = "Zzz",
+                optionC = null,
+                optionD = null,
                 correctOption = true.toString(),
                 questionType = QuestionType.TRUE_FALSE
             ))

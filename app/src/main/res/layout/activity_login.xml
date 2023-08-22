@@ -2,58 +2,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:padding="15dp"
     android:orientation="vertical"
+    android:padding="15dp"
     tools:context=".view.activity.LoginActivity">
 
     <TextView
-        android:text="@string/login"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:layout_marginBottom="20dp"
-        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
-<com.google.android.material.textfield.TextInputLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/email"
-        android:hint="@string/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</com.google.android.material.textfield.TextInputLayout>
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password"
-            android:hint="@string/password"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            />
+            android:hint="@string/email" />
     </com.google.android.material.textfield.TextInputLayout>
-    <ProgressBar
-        android:id="@+id/progressbar"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="30sp"/>
     <Button
-    android:id="@+id/btn_login"
-    android:text="@string/login"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    />
-    <Button
+        android:id="@+id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/login" />
+
+    <Button
         android:id="@+id/registerNow"
-        android:text="@string/register"
-        />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register" />
 
 </LinearLayout>

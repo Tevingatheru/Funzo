@@ -10,10 +10,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.learner.funzo.R
 import com.learner.funzo.model.Exam
 import com.learner.funzo.model.Options
 import com.learner.funzo.model.Question
+import com.learner.funzo.model.QuestionType
 import com.learner.funzo.view.activity.ExamActivity
 
 import com.learner.funzo.viewModel.constant.ScoreConstants
@@ -37,6 +40,9 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     val rIdMcqOptionB = R.id.mcqOptionB
     val rIdMcqOptionC = R.id.mcqOptionC
     val rIdMcqOptionD = R.id.mcqOptionD
+    val rIdMcqSubmitBtn = R.id.mcqSubmitBtn
+    private lateinit var navController: NavController
+
     companion object {
         const val FINISH = "Finish"
         const val NEXT = "Next"
@@ -164,35 +170,24 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         progressText.text = text
     }
 
-    fun initMCQQuestion(
-        optionA: TextView,
-        optionB: TextView,
-        optionC: TextView,
-        optionD: TextView,
-        submitButton: Button,
-        questionTextView: TextView,
-        progressBar: ProgressBar,
-        progressText: TextView
-    ) {
-        this.optionA = optionA
-        this.optionB = optionB
-        this.optionC = optionC
-        this.optionD = optionD
-        this.submitButton = submitButton
-        this.questionTextView = questionTextView
-        this.progressBar = progressBar
-        this.progressText = progressText
-        this.setOnClickListener()
-    }
+    private fun initMCQQuestion(
 
-    private fun setOnClickListener () {
+    ) {
+        this.optionA = examActivity.findViewById(rIdMcqOptionA)
+        this.optionB = examActivity.findViewById(rIdMcqOptionB)
+        this.optionC = examActivity.findViewById(rIdMcqOptionC)
+        this.optionD = examActivity.findViewById(rIdMcqOptionD)
+        this.submitButton = examActivity.findViewById(rIdMcqSubmitBtn)
+        this.questionTextView = examActivity.findViewById(R.id.multipleChoiceQuestionText)
+        this.progressBar = examActivity.findViewById(R.id.multipleChoiceProgressBar)
+        this.progressText =  examActivity.findViewById(R.id.multipleChoiceProgressBarText)
         optionA.setOnClickListener(this)
         optionB.setOnClickListener(this)
         optionC.setOnClickListener(this)
         optionD.setOnClickListener(this)
         submitButton.setOnClickListener(this)
     }
-
+    
     override fun onClick(view: View?) {
         if (view != null) {
             when(view.id) {
@@ -212,7 +207,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
                     selectedOptionView(option = examActivity.findViewById(rIdMcqOptionD), selectedOption = "D")
                 }
 
-                R.id.mcqSubmitBtn -> {
+                rIdMcqSubmitBtn -> {
                     if (isExamComplete()) {
                         completeExamProcess()
                     }
@@ -348,4 +343,33 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
             R.drawable.selected_option_text_background
         )
     }
+
+    fun setQuestion(applicationContext: ExamActivity) {
+        val question: Question = this.getCurrentQuestionByPosition()
+
+        when (question.questionType) {
+            //            QuestionType.TRUE_FALSE -> {
+            //                setTFQuestion(question)
+            //            }
+            QuestionType.MULTIPLE_CHOICE -> {
+                applicationContext.setContentView(R.layout.fragment_multiple_choice)
+                val navHostFragment = applicationContext.supportFragmentManager
+                    .findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+
+                navController = navHostFragment.navController
+                navController.navigate(resId = R.id.multipleChoiceFragment)
+
+                initMCQQuestion()
+                this.setMCQuestion(question)
+            }
+            //            QuestionType.OPEN_ENDED -> {
+            //                setOEQuestion(question)
+            //            }
+            else -> {
+                Toast.makeText(applicationContext, "No display for this type of question", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+    }
+
 }
