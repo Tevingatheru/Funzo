@@ -24,8 +24,8 @@ class SubjectListActivityViewModel: ViewModel()
         }
     }
 
-    private fun getExamBySubjectView(subjectDto: SubjectDto): Exam {
-        return ExamConstants.createExam(subjectDto.name).getExam()
+    private fun getExamBySubjectView(): Exam {
+        return ExamConstants.getExamConstants().getExam()
     }
 
     private fun navigateToQuizActivity(applicationContext: Context, exam: Exam) {
@@ -43,8 +43,7 @@ class SubjectListActivityViewModel: ViewModel()
         ListHelper.getListViewSize(listView)
 
         listView.setOnItemClickListener { _, _, i, _ ->
-            val selectedSubject = subjectListView.get(i)
-            val exam = this.getExamBySubjectView(selectedSubject)
+            val exam = this.getExamBySubjectView()
             this.navigateToQuizActivity(applicationContext = applicationContext, exam = exam)
         }
     }

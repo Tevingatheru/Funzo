@@ -10,8 +10,8 @@ object ExamConstants : Parcelable {
     private val threshold: Int = 100
     private var questions: ArrayList<Question>? = null
 
-    fun createExam(subject: String): ExamConstants {
-        questions = QuestionConstants.getQuestionsBySubjectName(subject)
+    fun getExamConstants(): ExamConstants {
+        questions = QuestionConstants.getQuestionsBySubjectName()
         return this
     }
 

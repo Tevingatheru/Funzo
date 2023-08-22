@@ -6,7 +6,7 @@ import com.learner.funzo.model.Question
 object QuestionConstants {
     const val TOTAL_QUESTIONS: String = "total_questions"
 
-    fun getQuestionsBySubjectName(subjectName: String): ArrayList<Question> {
+    fun getQuestionsBySubjectName(): ArrayList<Question> {
         return getQuestions()
     }
 

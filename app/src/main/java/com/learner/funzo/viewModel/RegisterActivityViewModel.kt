@@ -9,9 +9,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.google.android.material.textfield.TextInputEditText
+import com.learner.funzo.model.retrofit.BackendClientGenerator
+import com.learner.funzo.model.retrofit.UserClient
+import com.learner.funzo.model.retrofit.UserClientImpl
+import com.learner.funzo.model.retrofit.request.CreateUserRequest
 import com.learner.funzo.util.FirebaseUtil
 import com.learner.funzo.view.RegisterActivity
 import com.learner.funzo.viewModel.nav.NavigationHandler
+import kotlinx.coroutines.runBlocking
 
 class RegisterActivityViewModel: ViewModel(), OnClickListener {
     private var applicationContext: Context? = null
@@ -54,6 +59,12 @@ class RegisterActivityViewModel: ViewModel(), OnClickListener {
                     }
                     else -> {
                         FirebaseUtil.register(applicationContext!!, email, password)
+                        runBlocking {
+                            val userClientImpl: UserClientImpl = UserClientImpl(
+                                BackendClientGenerator
+                                .createClient(UserClient::class.java))
+                            userClientImpl.createUser(CreateUserRequest(email = email))
+                        }
                         clearRegistrationForm()
                     }
                 }
@@ -75,7 +86,7 @@ class RegisterActivityViewModel: ViewModel(), OnClickListener {
             buttonReg.setOnClickListener(this)
         } catch (e: Exception) {
             Toast.makeText(
-                this.applicationContext, "Error " + "While signup",
+                this.applicationContext, "Error While signup",
                 Toast.LENGTH_SHORT
             ).show()
         }

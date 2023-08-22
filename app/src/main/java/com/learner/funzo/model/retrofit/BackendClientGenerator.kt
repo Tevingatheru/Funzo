@@ -1,9 +1,7 @@
 package com.learner.funzo.model.retrofit
 
 import okhttp3.OkHttpClient
-
 import retrofit2.Retrofit
-
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Exception
 import java.lang.RuntimeException

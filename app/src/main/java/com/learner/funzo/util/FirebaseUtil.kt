@@ -31,17 +31,10 @@ class FirebaseUtil {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        val userClientImpl: UserClientImpl = UserClientImpl(BackendClientGenerator
-                            .createClient(UserClient::class.java))
-                        runBlocking {
-                            userClientImpl.createUser(CreateUserRequest(email = email))
-                        }
-
                         Toast.makeText(
                             applicationContext, "Account created.",
                             Toast.LENGTH_SHORT
                         ).show()
-
                         NavigationHandler.navigateToLoginActivity(applicationContext = applicationContext)
                     } else {
                         Toast.makeText(
