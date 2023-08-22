@@ -14,43 +14,27 @@ import com.learner.funzo.viewModel.ResultActivityViewModel.Companion.YOU_FAILED
 import com.learner.funzo.viewModel.ResultActivityViewModel.Companion.YOU_PASSED
 import com.learner.funzo.viewModel.constant.ScoreConstants
 
-class ResultActivity : AppCompatActivity() , OnClickListener {
+class ResultActivity : AppCompatActivity() {
 
     private val viewModel: ResultActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
-
-        setNextButtonOnClickListener()
+        viewModel.initApplicationContext(
+            applicationContext = this,
+            continueNextBtn = findViewById<Button>(ResultActivityViewModel.playButtonTextView)
+        )
         setScore()
         setCompletionText()
     }
 
     private fun setCompletionText() {
-        val completionText = findViewById<TextView>(R.id.completionMessage)
-        if (ScoreConstants.passed()) {
-            completionText.text = YOU_PASSED
-        } else {
-            completionText.text = YOU_FAILED
-        }
+        viewModel.setCompletionText(findViewById<TextView>(ResultActivityViewModel.rCompletionMessageTextView))
     }
 
     private fun setScore() {
-        findViewById<TextView>(R.id.score).text = viewModel.getScore()
+        findViewById<TextView>(ResultActivityViewModel.rScoreTextView).text = viewModel.getScore()
     }
 
-    private fun setNextButtonOnClickListener() {
-        findViewById<Button>(R.id.playButton).setOnClickListener(this)
-    }
-
-    override fun onClick(view: View?) {
-        Log.i("Results Activity",  "id: + ${view?.id.toString()} ")
-        when(view?.id) {
-            R.id.playButton -> {
-                viewModel.navigateToSubjectListActivity(this)
-                finish()
-            }
-        }
-    }
 }

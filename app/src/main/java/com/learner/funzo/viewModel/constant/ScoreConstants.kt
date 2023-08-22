@@ -24,7 +24,7 @@ object ScoreConstants : Parcelable {
         return totalQuestions
     }
 
-    fun  getScore(): Int {
+    fun  getTotalCorrectAnswerCount(): Int {
         return correctlyAnswered
     }
 

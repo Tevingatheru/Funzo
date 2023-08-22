@@ -9,7 +9,7 @@ import com.learner.funzo.viewModel.RegisterActivityViewModel
 
 class RegisterActivity : AppCompatActivity() {
     companion object {
-        private const val TAG: String = "Register Activity"
+        private const val TAG: String = "RegisterActivity"
     }
 
     private val registerActivityViewModel: RegisterActivityViewModel by viewModels()

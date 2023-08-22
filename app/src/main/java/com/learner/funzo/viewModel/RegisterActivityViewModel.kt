@@ -2,7 +2,6 @@ package com.learner.funzo.viewModel
 
 import android.content.Context
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Button
@@ -36,7 +35,6 @@ class RegisterActivityViewModel: ViewModel(), OnClickListener {
     private fun getEditTextPassword(): String {
         return this.editTextPassword.text.toString()
     }
-
 
     override fun onClick(view: View?) {
         when(view) {
