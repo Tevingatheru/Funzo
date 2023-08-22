@@ -12,7 +12,7 @@ import com.learner.funzo.viewModel.nav.NavigationHandler
 
 class ResultActivityViewModel : ViewModel(), OnClickListener {
     private var applicationContext: Context? = null
-    lateinit var continueNextBtn: Button
+    private var continueNextBtn: Button? = null
 
     companion object {
         const val YOU_PASSED = "You Passed"
@@ -20,6 +20,11 @@ class ResultActivityViewModel : ViewModel(), OnClickListener {
         val playButtonTextView = R.id.playButton
         val rScoreTextView = R.id.score
         val rCompletionMessageTextView = R.id.completionMessage
+    }
+
+    fun onDestroy () {
+        this.applicationContext = null
+        this.continueNextBtn = null
     }
 
     fun initApplicationContext(applicationContext: Context, continueNextBtn: Button) {
