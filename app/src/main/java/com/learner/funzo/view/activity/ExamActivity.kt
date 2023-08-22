@@ -47,17 +47,13 @@ class ExamActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exam)
-//        setContentView(R.layout.fragment_multiple_choice)
+        setContentView(R.layout.fragment_multiple_choice)
+        setContentView(R.layout.fragment_open_ended_question)
+        setContentView(R.layout.fragment_open_ended_question)
 
         viewModel.setExam(intent.getParcelableExtra(examKey)!!)
         ScoreConstants.resetScore(viewModel.getTotalNoOfQuestions(), viewModel.getThreshold())
-
-        // NavHost
-
-
-        // init
         viewModel.setExamActivity(this)
-        // set on click listener
         val question: Question = this.getCurrentQuestion()
 
         when (question.questionType) {
@@ -65,17 +61,14 @@ class ExamActivity : AppCompatActivity() {
 //                setTFQuestion(question)
 //            }
             QuestionType.MULTIPLE_CHOICE -> {
-
-
                 val navHostFragment = supportFragmentManager
                     .findFragmentById(R.id.fragmentContainerView) as NavHostFragment
 
                 navController = navHostFragment.navController
-                navController.navigate(R.id.multipleChoiceFragment)
+                navController.navigate(resId = R.id.multipleChoiceFragment)
 
-//                initMCQView()
-//                viewModel.setMCQuestion(question)
-
+                initMCQView()
+                viewModel.setMCQuestion(question)
             }
 //            QuestionType.OPEN_ENDED -> {
 //                setOEQuestion(question)

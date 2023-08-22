@@ -15,6 +15,7 @@ import com.learner.funzo.model.Exam
 import com.learner.funzo.model.Options
 import com.learner.funzo.model.Question
 import com.learner.funzo.view.activity.ExamActivity
+import com.learner.funzo.view.fragment.MultipleChoiceFragment
 
 import com.learner.funzo.viewModel.constant.ScoreConstants
 import com.learner.funzo.viewModel.nav.NavigationHandler
@@ -27,7 +28,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     private lateinit var optionC: TextView
     private lateinit var optionD: TextView
     private lateinit var submitButton: Button
-    private var optionA: TextView? = null
+    private lateinit var optionA: TextView
     private lateinit var  progressText: TextView
     private lateinit var  progressBar: ProgressBar
     private lateinit var  questionTextView: TextView
@@ -132,10 +133,10 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
 
     private fun defaultOptionsView() {
         val options = ArrayList<TextView>()
-        options.add(examActivity.findViewById(mcqOptionA))
-        options.add(examActivity.findViewById(mcqOptionB))
-        options.add(examActivity.findViewById(mcqOptionC))
-        options.add(examActivity.findViewById(mcqOptionD))
+        options.add(this.optionA)
+        options.add(this.optionB)
+        options.add(this.optionC)
+        options.add(this.optionD)
 
         for (option in options) {
             option.setTextColor(Color.parseColor("#7A8089"))
@@ -151,7 +152,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         question: Question?
     ) {
         this.questionTextView.text = question!!.question
-        this.optionA!!.text = question.optionA
+        this.optionA.text = question.optionA
         this.optionB.text = question.optionB
         this.optionC.text = question.optionC
         this.optionD.text = question.optionD
@@ -186,7 +187,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     }
 
     private fun setOnClickListener () {
-        optionA!!.setOnClickListener(this)
+        optionA.setOnClickListener(this)
         optionB.setOnClickListener(this)
         optionC.setOnClickListener(this)
         optionD.setOnClickListener(this)
