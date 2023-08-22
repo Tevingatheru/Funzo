@@ -60,7 +60,7 @@ class SubjectListActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.item1 -> {
+            R.id.itemLogout -> {
                 FirebaseUtil.logout(this)
                 true
             }
