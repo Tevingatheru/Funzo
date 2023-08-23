@@ -1,9 +1,9 @@
 package com.learner.funzo.model.retrofit.response
 
-data class SubjectResponse (val category: String,
-                            val code: String,
-                            val description: String,
-                            val name: String)
+data class SubjectResponse (val category: String? = null,
+                            val code: String? = null,
+                            val description: String? = null,
+                            val name: String? = null)
 {
 
 }

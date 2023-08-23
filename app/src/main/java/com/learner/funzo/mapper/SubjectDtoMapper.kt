@@ -8,7 +8,7 @@ object SubjectDtoMapper {
     fun mapSubjectListResponseToList(subjectListResponse: SubjectListResponse): List<SubjectDto> {
         var subjectList : List<SubjectDto> = mutableListOf()
         subjectListResponse.subjects.forEach{
-            subjectList = subjectList.plus(SubjectDto(name = it.name, category = it.category))
+            subjectList = subjectList.plus(SubjectDto(name = it.name!!, category = it.category!!))
         }
         return subjectList
     }

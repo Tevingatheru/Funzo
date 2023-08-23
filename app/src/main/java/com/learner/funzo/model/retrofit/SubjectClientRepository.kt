@@ -10,13 +10,12 @@ import retrofit2.Call
 import retrofit2.Response
 import java.net.SocketTimeoutException
 
-class SubjectClientRepository (private val subjectClient: SubjectClient)
+class SubjectClientRepository (private val subjectClient: SubjectClient? = ClientGenerator.createClient(SubjectClient::class.java))
 {
     suspend fun getAll(): List<SubjectDto> {
         return try {
             withContext(Dispatchers.IO) {
-                val call: Call<SubjectListResponse> = subjectClient.getAll()
-                val response: Response<SubjectListResponse> = call.execute()
+                val response: Response<SubjectListResponse> =  subjectClient!!.getAll()
                 val subjectListResponse: SubjectListResponse = response.body()!!
                 SubjectDtoMapper.mapSubjectListResponseToList(subjectListResponse)
             }
