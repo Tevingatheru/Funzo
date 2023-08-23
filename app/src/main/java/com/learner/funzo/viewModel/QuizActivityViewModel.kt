@@ -272,6 +272,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         setSubmitButtonText(this.btnSubmit!!)
         this.selectedOption = null
         this.nextPosition()
+        this.onDestroy()
     }
 
     private fun setSubmitButtonText(submitButton: Button) {

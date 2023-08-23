@@ -64,6 +64,7 @@ class ExamActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.i(TAG, "onDestroy")
+        viewModel.onDestroy()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
