@@ -66,6 +66,12 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
     private var correctOption: String? = null
 
     fun onDestroy() {
+        destroyScreen()
+
+        this.examActivity = null
+    }
+
+    private fun destroyScreen() {
         this.tvOptionA = null
         this.tvOptionB = null
         this.tvOptionC = null
@@ -73,7 +79,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         this.tvProgress = null
         this.pbProgressBar = null
         this.tvQuestion = null
-        this.examActivity = null
+
         this.rbTrueOption = null
         this.rbFalseOption = null
     }
@@ -223,6 +229,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
                         incompleteExamProcess()
                     }
                     else if (isNextPhase()) {
+
                         this.setQuestion(examActivity!!)
                     }
                     else
@@ -272,7 +279,7 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
         setSubmitButtonText(this.btnSubmit!!)
         this.selectedOption = null
         this.nextPosition()
-        this.onDestroy()
+        this.destroyScreen()
     }
 
     private fun setSubmitButtonText(submitButton: Button) {
