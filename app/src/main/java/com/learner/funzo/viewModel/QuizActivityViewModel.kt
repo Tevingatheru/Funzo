@@ -368,9 +368,6 @@ class QuizActivityViewModel : ViewModel(),  View.OnClickListener {
                 this.initMCQQuestion()
                 this.setMCQuestion(question)
             }
-            //            QuestionType.OPEN_ENDED -> {
-            //                setOEQuestion(question)
-            //            }
             else -> {
                 Toast.makeText(applicationContext, "No display for this type of question", Toast.LENGTH_SHORT)
                     .show()
